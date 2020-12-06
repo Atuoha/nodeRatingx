@@ -1,0 +1,38 @@
+
+<body  class="login-img3-body">
+    <div class="container">
+
+        <form class="login-form" action="/logs/signup" method="post">
+            <div class="login-wrap">
+                <p class="login-img"><i class="icon_profile"></i></p>
+                {{> home/msgs}}
+
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon_profile"></i></span>
+                    <input type="text" name="name" required validate class="form-control" placeholder="Name" autofocus>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                    <input type="email" name="email" required validate class="form-control" placeholder="Email">
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+                    <input type="password" name="password" required class="form-control" placeholder="Password">
+                </div>
+
+                 <label class="checkbox">
+                    <input type="checkbox" value="remember-me" required>Agree to Terms
+                    <span class="pull-right">Not New? <a href="/logs/signin">Sign in</a></span>
+                </label>
+                     
+                <button class="btn btn-info btn-lg btn-block" type="submit">Register</button>
+              <a style="color:white" class="btn btn-primary btn-lg btn-block" href=""><i class="fa fa-facebook text-white"></i> Sign up</a>
+
+            </div>
+
+        </form>
+    
+    </div>
+</body>

@@ -1,0 +1,49 @@
+<!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu">
+          <li class="active">
+            <a class="" href="/admin">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Dashboard</span>
+                      </a>
+          </li>
+
+           <li>
+            <a class="" href="/admin/users/profile/{{loggedUser.id}}">
+                          <i class="fa fa-user"></i>
+                          <span>Profile</span>
+                      </a>
+          </li>
+
+
+
+            <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="icofont-doctor-alt"></i>
+                          <span>Doctors</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+            <ul class="sub">
+              <li><a class="" href="/admin/doctor">All Doctors</a></li>
+              <li><a class="" href="/admin/doctor/create">Create Doctor</a></li>
+              <li><a class="" href="/admin/doctor/dummy">Generate Dummy</a></li>
+            </ul>
+          </li>
+
+
+
+            <li>
+            <a class="" href="/admin/media">
+                          <i class="fa fa-photo"></i>
+                          <span>Media</span>
+                      </a>
+          </li>
+
+            
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->

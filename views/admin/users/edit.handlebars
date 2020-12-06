@@ -1,0 +1,118 @@
+
+<form action="/admin/users/update/{{user.id}}" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="" class="control-label">Fullname</label>
+            <input type="text" class="form-control" value="{{user.name}}"  name="name" required autofocus> 
+        </div>
+
+         <div class="col-md-4">
+            <label for="" class="control-label">Email</label>
+            <input type="text" class="form-control" value="{{user.email}}" name="email" required > 
+        </div>
+
+         <div class="col-md-4">
+            <label for="" class="control-label">Phone</label>
+            <input type="text" class="form-control" value="{{user.phone}}" name="phone" required > 
+        </div>
+
+    </div>
+
+
+     <div class="row">
+        <div class="col-md-4">
+            <label for="" class="control-label">Role</label>
+            {{#ifeq loggedUser.role 'Admin'}}
+            <select name="role" class="form-control" id="" required>
+                {{#select user.role}}
+                    <option value="Subscriber">Subscriber</option>
+                    <option value="Admin">Admin</option>
+                {{/select}}
+            </select>
+           {{/ifeq}}
+
+           {{#ifeq loggedUser.role 'Subscriber'}} 
+                <input type="text" class="form-control" name="role" value="{{user.role}}" readonly id="">
+           {{/ifeq}}
+        </div>
+
+         <div class="col-md-4">
+            <label for="" class="control-label">Status</label>
+             {{#ifeq loggedUser.role 'Admin'}}
+            <select name="status" class="form-control" id="" required>
+                {{#select user.status}}
+                    <option value="Active">Active</option>
+                    <option value="Unactive">Unactive</option>
+                {{/select}}
+            </select>
+           {{/ifeq}}
+
+           {{#ifeq loggedUser.role 'Subscriber'}} 
+                <input type="text" class="form-control" name="status" value="{{user.status}}" readonly id="">
+           {{/ifeq}}
+        </div>
+
+         <div class="col-md-4">
+            <label for="" class="control-label">Imagery</label>
+            <input type="file" name="file" id="inpFile" class="form-control">
+        </div>
+    </div>
+
+      <div class="row">
+            <div class="col-md-6">
+                <label for="" class="control-label">Password</label>
+                <input type="password" name="password" class="form-control" id="">
+            </div>
+            
+
+            <div class="col-md-6">
+                <div class="image-preview pull-right" id="imagePreview">
+                {{#if user.file}} 
+                        <img width="100" class="img-thumbnail image-preview__image" src="/uploads/{{user.file}}" alt=""> 
+                    {{else}}
+                        <img width="100" class="img-thumbnail image-preview__image" src="/uploads/default.png" alt=""> 
+                {{/if}} 
+                    <span class="image-preview__default-text"> </span>
+                </div>
+            </div>
+
+         </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Submit  Edit</button>
+    </div>
+</form>
+
+
+
+
+
+
+<!-- SCRIPTING FOR PREVIEWING IMAGE BEFORE UPLOADING  -->
+<script>
+
+    const inpFile = document.getElementById('inpFile');
+    const previewContainer = document.getElementById('imagePreview');
+    const previewImage = document.querySelector('.image-preview__image');
+    const previewDefault = document.querySelector('.image-preview__default-text');
+
+    inpFile.addEventListener('change',function(){
+        const file = this.files[0];
+
+        if(file){
+            const reader = new FileReader();
+            previewDefault.style.display = 'none';
+            previewImage.style.display = 'block';
+
+            reader.addEventListener('load',function(){
+                previewImage.setAttribute('src',this.result);
+                previewImage.style.width = '130px';
+            });
+            reader.readAsDataURL(file)
+        }else{
+            previewDefault.style.display = 'block';
+            previewImage.style.display = 'none';
+            previewImage.setAttribute('src',"");
+        }
+    })
+</script>

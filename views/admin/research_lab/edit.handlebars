@@ -1,0 +1,110 @@
+<div class="alert alert-success">
+    Editing - {{lab.name}}
+</div>
+
+
+<form action="/admin/labs/update/{{lab.id}}" method="post" enctype="multipart/form-data">
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="" class="control-label">Lab Name</label>
+                <input type="text" placeholder="Lab Name" value="{{lab.name}}" class="form-control" name="name" required autofocus>
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="" class="control-label">Tag Name</label>
+                <input type="text" placeholder="Tag Name" value="{{lab.tag}}" class="form-control" name="tag" required >
+        </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="" class="control-label">Imagery</label>
+                <input type="file" name="file" id="inpFile" class="form-control">
+            </div>
+
+             <div class="image-preview pull-right" id="imagePreview">
+                <img width="100" class="img-thumbnail image-preview__image" src="/uploads/{{lab.file}}" alt=""> 
+                <span class="image-preview__default-text"> </span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="" class="control-label">Location</label>
+            <input type="text" class="form-control" value="{{lab.location}}" required name="location" >
+        </div>
+
+        <div class="col-md-6">
+            <label for="" class="control-label">Establishment Date</label>
+            <input type="datetime" id="datepicker1" class="form-control" value="{{lab.date}}" required name="date" >
+        </div>
+    </div>
+
+
+
+        <div class="form-group">
+            <label for="" class="control-label" >Lab Intro</label>
+            <textarea name="intro" placeholder="Introduction" class="form-control" id="" cols="2" rows="2">{{lab.intro}}</textarea>
+        </div>
+
+    <div class="form-group"></div>
+         <label for="" class="control-label" >Lab Content</label>
+          <textarea name="content" placeholder="Content" class="form-control" id="" cols="5" rows="6"> 
+{{lab.content}}</textarea>
+    </div>
+
+    <br>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Submit Edit</button>
+    </div>
+
+</form>
+
+
+
+
+
+
+<script src="/admin/js/jquery.js"></script>
+<!-- SCRIPTING FOR PREVIEWING IMAGE BEFORE UPLOADING  -->
+<script>
+
+    const inpFile = document.getElementById('inpFile');
+    const previewContainer = document.getElementById('imagePreview');
+    const previewImage = document.querySelector('.image-preview__image');
+    const previewDefault = document.querySelector('.image-preview__default-text');
+
+    inpFile.addEventListener('change',function(){
+        const file = this.files[0];
+
+        if(file){
+            const reader = new FileReader();
+            previewDefault.style.display = 'none';
+            previewImage.style.display = 'block';
+
+            reader.addEventListener('load',function(){
+                previewImage.setAttribute('src',this.result);
+                previewImage.style.width = '130px';
+            });
+            reader.readAsDataURL(file)
+        }else{
+            previewDefault.style.display = 'block';
+            previewImage.style.display = 'none';
+            previewImage.setAttribute('src',"");
+        }
+    })
+
+     $(document).ready(function(){
+        $( "#datepicker1" ).datepicker();
+        $('#timepicker1').timepicker();
+
+    })
+</script>

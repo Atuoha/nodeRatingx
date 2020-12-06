@@ -1,0 +1,62 @@
+
+
+<form method="POST" action="/admin/appointment/create">
+    
+    <div class="row">
+        <div class="col-md-4">
+             <div class="form-group dates-wrap">
+                <label class="control-label">Date</label>
+                <input type="text" id="datepicker1" placeholder="Appointment Date" required class="form-control" name="date">
+            </div>
+        </div>
+
+
+         <div class="col-md-4">
+             <div class="form-group">
+                <label class="control-label">Department</label>
+                <select name="department" id="" class="form-control">
+                    {{#each depts}}
+                        <option value="{{id}}">{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+
+
+         <div class="col-md-4">
+             <div class="form-group">
+                <label class="control-label">Doctor</label>
+                 <select name="doctor" id="" class="form-control">
+                     {{#each doctors}}
+                        <option value="{{id}}">{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+ 
+    </div>
+
+    <div class="form-group">
+        <label for="" class="control-label">Message</label>
+        <textarea name="message" id="" placeholder="Enter Message" class="form-control" required cols="30" rows="5"></textarea>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Book Appointment</button>
+    </div>
+
+</form>
+
+
+
+
+
+<!-- Activators -->
+<script src="/admin/js/jquery.js"></script>
+<script>
+    $(document).ready(function(){
+        $( "#datepicker1" ).datepicker();
+        $('#timepicker1').timepicker();
+
+    })
+</script>

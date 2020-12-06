@@ -1,0 +1,43 @@
+<div class="alert alert-success">
+    Viewing Department:  - {{dept.name}}
+</div>
+
+
+<div class="card pull-right">
+   <img src="/uploads/{{dept.file}}" width="200" class="thumbnail">
+</div>
+
+<table class="table table-striped bordered">
+    
+    <tr>
+    <th>Name</th>
+    <td>{{dept.name}}</td>
+    </tr>
+    
+    <tr>
+    <th>Tag</th>
+    <td>{{dept.tag}}</td>
+    </tr>
+
+    <tr>
+    <th>Intro</th>
+    <td>{{dept.intro}}</td>
+    </tr>
+    
+    <tr>
+    <th>Content</th>
+    <td>{{dept.content}}</td>
+    </tr>
+    
+    <tr>
+    <th>Edit</th>
+    <td><a href="/admin/department/edit/{{dept.id}}" class="btn btn-success"><i class="fa fa-pencil"></i> Edit</a></td>
+    </tr>
+   
+    <tr>
+    <th>Delete</th>
+    <td><a href="/admin/department/delete/{{dept.id}}" class="btn btn-danger"><i class="fa fa-remove"></i> Delete</td>
+    </tr>
+    
+
+</table>

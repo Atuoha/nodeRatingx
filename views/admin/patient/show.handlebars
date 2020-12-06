@@ -1,0 +1,62 @@
+<div class="container">
+<div class="center-algin text-center justify-content-center m-5 mx-auto">
+<div class="row">
+    <div class="col-md-5">
+        <img src="/uploads/{{patient.file}}" width="250" class="img-circle" alt="">
+    </div>
+
+    <div class="col-md-5 mt-2">
+        <table class="table table-striped table-responsive">
+            <tr>
+                <th>Full Name</th>
+                <td>{{patient.name}}</td>
+            </tr>
+
+            <tr>
+                <th>Email</th>
+                <td>{{patient.email}}</td>
+            </tr>
+
+
+            <tr>
+                <th>Phone</th>
+                <td>{{patient.phone}}</td>
+            </tr>
+
+
+            <tr>
+                <th>Entry Date</th>
+                <td>{{generate_date entry_date 'MMM-Do-Y'}}</td>
+            </tr>
+
+            <tr>
+                <th>Discharge Date</th>
+                <td>{{generate_date discharge_date 'MMM-Do-Y'}}</td>
+            </tr>
+
+            <tr>
+                <th>Note</th>
+                <td>{{patient.note}}</td>
+            </tr>
+
+              <tr>
+                <th>Status</th>
+                <td>{{patient.status}}</td>
+            </tr>
+
+            <tr>
+                <th>Edit Patient</th>
+                <td> <a href="/admin/patient/edit/{{patient.id}}" class="btn btn-success"><i class="fa fa-pencil"></i> Edit Patient</a></td>
+            </tr>
+
+            <tr>
+                <th>Delete patient</th>
+                <td> <a href="/admin/patient/delete/{{patient.id}}" class="btn btn-danger"><i class="fa fa-remove"></i> Delete Patient</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+   
+
+</div>

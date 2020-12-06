@@ -1,0 +1,98 @@
+
+<form action="/admin/patient/create" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="" class="control-label">Fullname</label>
+            <input type="text" class="form-control" name="name" required autofocus> 
+        </div>
+
+         <div class="col-md-4">
+            <label for="" class="control-label">Email</label>
+            <input type="text" class="form-control" name="email" required > 
+        </div>
+
+         <div class="col-md-4">
+            <label for="" class="control-label">Phone</label>
+            <input type="text" class="form-control" name="phone" required > 
+        </div>
+
+    </div>
+
+
+     <div class="row">
+        <div class="col-md-4">
+            <label for="" class="control-label">Entry Date</label>
+            <input type="text" id="datepicker1" placeholder="Entry Date" required class="form-control" name="entry_date">
+
+        </div>
+
+         <div class="col-md-4">
+            <label for="" class="control-label">Discharge Date</label>
+            <input type="text" id="datepicker2" placeholder="Discharge Date" required class="form-control" name="discharge_date">
+
+        </div>
+
+         <div class="col-md-4">
+            <label for="" class="control-label">Imagery</label>
+            <input type="file" name="file" id="inpFile" required class="form-control">
+        </div>
+
+        <div class="image-preview pull-right" id="imagePreview">
+                <img width="100" class="img-thumbnail image-preview__image" src="/uploads/default.png" alt=""> 
+                <span class="image-preview__default-text"> </span>
+         </div>
+    </div>
+
+    <div class="form-group">
+        <label for="" class="control-label">Note</label>
+       <textarea name="note" id="" cols="5" rows="6" class="form-control" required></textarea>
+    </div>
+
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create Patient</button>
+    </div>
+</form>
+
+
+
+
+
+
+<!-- SCRIPTING FOR PREVIEWING IMAGE BEFORE UPLOADING  -->
+<script>
+
+    const inpFile = document.getElementById('inpFile');
+    const previewContainer = document.getElementById('imagePreview');
+    const previewImage = document.querySelector('.image-preview__image');
+    const previewDefault = document.querySelector('.image-preview__default-text');
+
+    inpFile.addEventListener('change',function(){
+        const file = this.files[0];
+
+        if(file){
+            const reader = new FileReader();
+            previewDefault.style.display = 'none';
+            previewImage.style.display = 'block';
+
+            reader.addEventListener('load',function(){
+                previewImage.setAttribute('src',this.result);
+                previewImage.style.width = '130px';
+            });
+            reader.readAsDataURL(file)
+        }else{
+            previewDefault.style.display = 'block';
+            previewImage.style.display = 'none';
+            previewImage.setAttribute('src',"");
+        }
+    })
+</script>
+<!-- Activators -->
+<script src="/admin/js/jquery.js"></script>
+<script>
+    $(document).ready(function(){
+        $( "#datepicker1" ).datepicker();
+        $('#datepicker2').datepicker();
+
+    })
+</script>

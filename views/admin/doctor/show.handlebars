@@ -1,0 +1,39 @@
+
+<div class="card pull-right">
+   <img src="/uploads/{{doc.file}}" class="img-circle" width="200">
+</div>
+
+<table class="table table-striped bordered">
+    
+    <tr>
+    <th>Full Name</th>
+    <td>{{doc.name}}</td>
+    </tr>
+    
+    <tr>
+    <th>Email</th>
+    <td>{{doc.email}}</td>
+    </tr>
+
+    <tr>
+    <th>Field</th>
+    <td>{{doc.field}}</td>
+    </tr>
+
+    <tr>
+    <th>Intro</th>
+    <td>{{doc.intro}}</td>
+    </tr>
+    
+    <tr>
+    <th>Edit</th>
+    <td><a href="/admin/doctor/edit/{{doc.id}}" class="btn btn-success"><i class="fa fa-pencil"></i> Edit</a></td>
+    </tr>
+   
+    <tr>
+    <th>Delete</th>
+    <td><a href="/admin/doctor/delete/{{doc.id}}" class="btn btn-danger"><i class="fa fa-remove"></i> Delete</td>
+    </tr>
+    
+
+</table>

@@ -1,0 +1,26 @@
+
+<body  class="login-img3-body">
+    <div class="container">
+
+        <form class="login-form" action="/logs/signin" method="POST">
+            <div class="login-wrap">
+                <p class="login-img"><i class="icon_lock_alt"></i></p>
+                 {{> home/msgs}}
+                
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                    <input type="email" name="email" required validate class="form-control" placeholder="Email" autofocus>
+                </div>
+
+                <label class="checkbox">
+                    <input type="checkbox" value="remember-me"> Agree to Terms
+                </label>
+
+                <button class="btn btn-info btn-lg btn-block" type="submit">Submit</button>
+
+            </div>
+
+        </form>
+    
+    </div>
+</body>

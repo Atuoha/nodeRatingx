@@ -1,0 +1,89 @@
+<div class="alert alert-success">
+    Editing - {{dept.name}}
+</div>
+
+
+<form action="/admin/department/update/{{dept.id}}" method="post" enctype="multipart/form-data">
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="" class="control-label">Department Name</label>
+                <input type="text" placeholder="Department Name" value="{{dept.name}}" class="form-control" name="name" required autofocus>
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="" class="control-label">Tag Name</label>
+                <input type="text" placeholder="Tag Name" value="{{dept.tag}}" class="form-control" name="tag" required >
+        </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="" class="control-label">Imagery</label>
+                <input type="file" name="file" id="inpFile" class="form-control">
+            </div>
+
+             <div class="image-preview pull-right" id="imagePreview">
+                <img width="100" class="img-thumbnail image-preview__image" src="/uploads/{{dept.file}}" alt=""> 
+                <span class="image-preview__default-text"> </span>
+            </div>
+        </div>
+
+    </div>
+
+
+        <div class="form-group">
+            <label for="" class="control-label" >Department Intro</label>
+            <textarea name="intro" placeholder="Introduction" class="form-control" id="" cols="2" rows="2">{{dept.intro}}</textarea>
+        </div>
+
+    <div class="form-group"></div>
+         <label for="" class="control-label" >Department Content</label>
+          <textarea name="content" placeholder="Content" class="form-control" id="" cols="5" rows="6"> 
+{{dept.content}}</textarea>
+    </div>
+
+    <br>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Submit Edit</button>
+    </div>
+
+</form>
+
+
+
+
+
+<!-- SCRIPTING FOR PREVIEWING IMAGE BEFORE UPLOADING  -->
+<script>
+
+    const inpFile = document.getElementById('inpFile');
+    const previewContainer = document.getElementById('imagePreview');
+    const previewImage = document.querySelector('.image-preview__image');
+    const previewDefault = document.querySelector('.image-preview__default-text');
+
+    inpFile.addEventListener('change',function(){
+        const file = this.files[0];
+
+        if(file){
+            const reader = new FileReader();
+            previewDefault.style.display = 'none';
+            previewImage.style.display = 'block';
+
+            reader.addEventListener('load',function(){
+                previewImage.setAttribute('src',this.result);
+                previewImage.style.width = '130px';
+            });
+            reader.readAsDataURL(file)
+        }else{
+            previewDefault.style.display = 'block';
+            previewImage.style.display = 'none';
+            previewImage.setAttribute('src',"");
+        }
+    })
+</script>

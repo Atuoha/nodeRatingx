@@ -1,0 +1,18 @@
+<form action="/admin/testimony/update/{{test.id}}" method="post">
+ <div class="row">
+    <div class="col-md-6">
+        <label for="" class="control-label">Field/Occupation</label>
+        <input type="text" name="field" value="{{test.field}}" placeholder="Field/Occupation" required autofocus >
+    </div>
+
+
+     <div class="col-md-6">
+        <label for="" class="control-label">Message</label>
+      <textarea name="message" id="" cols="5" rows="6" required placeholder="Message">{{test.message}}</textarea>
+    </div>
+ </div>
+
+ <div class="form-group">
+     <button type="submit" class="btn btn-success">Sumbit Edit</button>
+ </div>
+</form>

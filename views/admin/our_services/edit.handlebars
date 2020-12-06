@@ -1,0 +1,27 @@
+<form action="/admin/service/update/{{service.id}}" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="" class="control-label">Name</label>
+                <input type="text" name="name" value="{{service.name}}" class="form-control" placeholder="Service Name" required autofocus>
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="" class="control-label">Font Awesome</label>
+                <input type="text" name="font" value="{{service.font}}" class="form-control" placeholder="Font Awesome | " required>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="" class="control-label">Content</label>
+        <textarea name="content" id="" cols="5"  rows="6" class="form-control" required>{{service.content}}</textarea>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Edit Service</button>
+    </div>
+</form>
