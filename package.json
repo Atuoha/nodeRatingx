@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.3",
+    "async": "^3.2.0",
     "axios": "^0.20.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -23,6 +24,7 @@
     "express-handlebars": "^5.1.0",
     "express-handler": "^0.2.0",
     "express-session": "^1.17.1",
+    "express-validator": "^6.8.0",
     "faker": "^5.1.0",
     "handlebars": "^4.7.6",
     "method-override": "^3.0.0",
@@ -30,12 +32,15 @@
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.6",
     "mongoose-url-slugs": "^1.0.2",
+    "nodemailer": "^6.4.16",
+    "nodemailer-smtp-transport": "^2.7.4",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "postman-collection": "^3.6.7",
     "ws": "^7.3.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "dot-env": "0.0.1"
   }
 }

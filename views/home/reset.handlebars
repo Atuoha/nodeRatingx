@@ -2,14 +2,20 @@
 <body  class="login-img3-body">
     <div class="container">
 
-        <form class="login-form" id="forgot-form" action="/logs/forgot" method="POST">
+        <form class="login-form" id="reset-form" action="/logs/reset" method="POST">
             <div class="login-wrap">
                 <p class="login-img"><i class="icon_lock_alt"></i></p>
                  {{> home/msgs}}
                 
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                    <input type="email" name="email" required validate class="form-control" placeholder="Email" autofocus>
+                 <div class="input-group">
+                    <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+                    <input type="password" name="password" required class="form-control" placeholder="Password">
+                </div>
+
+
+                 <div class="input-group">
+                    <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+                    <input type="password" name="password" required class="form-control" placeholder="Confirm Password">
                 </div>
 
                 <label class="checkbox">

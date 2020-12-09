@@ -4,12 +4,12 @@ const express = require('express'),
     flash = require('connect-flash'),
     session = require('express-session'),
     upload = require('express-fileupload'),
+    bodyParser = require('body-parser'),
     handlebars = require('express-handlebars'),
     Handlebars = require('handlebars'),
     port  = process.env.PORT || 1777,
     path = require('path'),
     passport = require('passport'),
-    bodyParser = require('body-parser'),
     {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access'),
     methodOverride = require('method-override'),
     {mongodbURI} = require('./config/db');
@@ -58,6 +58,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 // 
 
+
+// express-validator middleware
+// app.use(validator())
 
 // Session Middleware
 app.use(session({
