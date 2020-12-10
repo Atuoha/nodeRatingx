@@ -1,3 +1,5 @@
+const { response } = require('express')
+
 const express  = require('express'),
     app = express(),
     router = express.Router(),
@@ -5,7 +7,7 @@ const express  = require('express'),
     { body } = require('express-validator'),
     nodemailer = require('nodemailer'),
     smtpTransport = require('nodemailer-smtp-transport'),
-    ansync = require('ansync'),
+    async = require('async'),
     crypto = require('crypto'),
     bcrypt = require('bcryptjs'),
     passport = require('passport'),
@@ -35,9 +37,6 @@ router.get('/forgot', (req, res)=>{
 })
 
 
-router.get('/reset', (req, res)=>{
-    res.render('home/reset', {title: 'Reset'})
-})
 
 
 
@@ -127,8 +126,7 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
-router.post('/login', (req, res, next)=>{
-
+router.post('/signin', (req, res, next)=>{
     passport.authenticate('local', {
         successRedirect: '/admin',
         failureRedirect: '/logs/signin',
@@ -138,40 +136,36 @@ router.post('/login', (req, res, next)=>{
 
 
 
-router.post('/forgot', (req, res)=>{
-    ansync.waterfall([
+router.post('/forgot', (req, res, next)=>{
+    async.waterfall([
         function(callback){
             crypto.randomBytes(20, (err, buf)=>{
+                if(err)console.log(err)
                 let token = buf.toString('hex')
                 callback(err, token)
             })
         },
 
         function(token, callback){
-
             User.findOne({email: req.body.email})
             .then(user=>{
                 if(!user){
                     req.flash('error_msg', 'Email not recognized!');
-                    // return 'Email not recognized!';
                     res.redirect('/logs/forgot');
-        
                 }else{
-                    user. passwordResetToken = token;
+                    user.passwordResetToken = token;
                     user.passwordResetExpires = Date.now() + 60*60*1000;
                     user.save(err=>{
                         callback(err, token, user)
                     })
-                    // req.flash('success_msg', 'Password reset link has been sent!');
-                    // // return 'Password reset link sent successfully'
-                    // res.redirect('/logs/forgot');
+                    
                 }
             })
 
         },
 
         function(token, user, callback){
-             smtpTransport = nodemailer.createTransport({
+           let smtpTransport = nodemailer.createTransport({
                 service: 'Gmail',
                 auth: {
                     user: EMAIL_ADDRESS,
@@ -184,18 +178,68 @@ router.post('/forgot', (req, res)=>{
                 to: user.email,
                 from: 'nodeRatingx ' + '<' + EMAIL_ADDRESS + '>',
                 subject: 'nodeRatingx Reset Link',
-                text: 'Hello there, you requested to have your password resetted. \n\n Use this link to reset you password now: \n\n http://localhost:1777/email='+user.email+'token='+token 
+                text: 'Hello there, you requested to have your password resetted. \n\n' + 
+                      'Use this link to reset you password now: \n\n' +
+                      'http://localhost:1777/logs/reset/'+token + '\n\n' 
             }
+
+            smtpTransport.sendMail(mailOptions, (err, response)=>{
+                if(err)console.log(err);
+                req.flash('success_msg', `Password reset link has been sent to ${user.email}!`);
+                return callback(err, user)
+            })
         }
-       
-    ])
+        
+    ], err=>{
+        if(err){
+         return next(err)
+        }
+        res.redirect('/logs/forgot')
+    })
+    
+    
    
 })
 
 
 
-router.post('/reset/:email/:token', (req, res)=>{
+router.get('/reset/:token', (req, res)=>{
 
+    User.findOne({passwordResetToken: req.params.token, passwordResetExpires: {$gt: Date.now() }})
+    .then(user=>{
+        if(!user){
+            req.flash('error_msg', 'Token is unrecognised. It has expired/invalid!')
+            res.redirect('/logs/forgot/')
+        }else{
+             res.render('home/reset', {title: 'Reset', user: user.id, token: req.params.token})
+        }
+    })
+
+})
+
+
+router.post('/reset', (req, res)=>{
+    User.findOne({_id: req.body.user_id})
+    .then(user=>{
+        if(req.body.password === req.body.confirm_password){
+            bcrypt.genSalt(10, (err, salt)=>{
+                bcrypt.hash(req.body.password, salt, (err, hash)=>{
+                    if(err)console.log(err)
+                    user.password = hash
+                    user.save()
+                    .then(response=>{
+                        req.flash('success_msg', 'Password reset success. Login now!')
+                        res.redirect('/logs/signin')
+                    })
+                    .catch(err=>console.log(err))
+                })
+            })
+        }else{
+            req.flash('error_msg', 'Password mismatch. Try again!')
+            res.redirect(`/logs/reset/${req.body.token}`)
+        }
+    })
+    .catch(err=>console.log(err))
 })
 
 
