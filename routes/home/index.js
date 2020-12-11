@@ -9,8 +9,13 @@ const express  = require('express'),
   })  
 
   router.get('/', (req, res)=>{
-      res.render('home/index', {title: 'nodeRatingx|Home'})
+      if(req.session.cookie.originalMaxAge != null){
+          res.redirect('/admin')
+      }else{
+          res.render('home/index', {title: 'nodeRatingx|Home'})
+      }
   })
+
 
 
 
