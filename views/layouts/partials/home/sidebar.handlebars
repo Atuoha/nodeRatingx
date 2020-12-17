@@ -2,42 +2,78 @@
     <aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
-        <ul class="sidebar-menu">
+        <ul class="sidebar-menu" style="padding-top: 10px;" >
+          <div class="text-center" >
+             {{#if loggedUser}}
+            <div style="margin-top: 10px; padding-bottom:10px;"> 
+                  {{#if loggedUser.file}}
+                        <img alt="" src="/uploads/{{loggedUser.file}}" width="70" class="img-circle img-thumbnail" >
+                      {{else}}
+                        <img alt="" src="/uploads/default.png" width="70">
+                  {{/if}}           
+                </div>
+                <span>Welcome,</span>
+                <h4>{{loggedUser.fullname}}</h4>
+
+              {{else}}
+                <div style="margin-top: 10px; padding-bottom:10px;"> 
+                  <img alt="" src="/uploads/default.png" width="70">
+                </div>
+                  <span>Welcome,</span>
+                  <h4>nodeRatings User</h4>
+              {{/if}}
+          </div>
           <li class="active">
-            <a class="" href="/admin">
+            <a class="" href="/">
                           <i class="fa fa-dashboard"></i>
-                          <span>Dashboard</span>
+                          <span>Home</span>
                       </a>
           </li>
 
+          {{#if loggedUser}}
            <li>
-            <a class="" href="/admin/users/profile/{{loggedUser.id}}">
+            <a class="" href="/user/profile">
                           <i class="fa fa-user"></i>
                           <span>Profile</span>
                       </a>
           </li>
+          {{/if}}
 
 
+              <li class="sub-menu">
+                <a href="javascript:;" class="">
+                            <i class="fa fa-building-o"></i>
+                            <span>Companies</span>
+                            <span class="menu-arrow arrow_carrot-right"></span>
+                        </a>
+                <ul class="sub">
+                    <li><a class="" href="/company">All Companies</a></li>
+                   {{#ifeq loggedUser.role 'Manager'}}
+                    <li><a class="" href="/user/company/create">Create Company</a></li>
+                    <li><a class="" href="/user/company/dummy">Create Dummy</a></li>
+                    {{/ifeq}}
 
-            <li class="sub-menu">
-            <a href="javascript:;" class="">
-                          <i class="icofont-doctor-alt"></i>
-                          <span>Doctors</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
+                    {{#ifeq loggedUser.role 'Admin'}}
+                    <li><a class="" href="/admin/company/create">Create Company</a></li>
+                    <li><a class="" href="/admin/company/dummy">Create Dummy</a></li>
+                    {{/ifeq}}
+                </ul>
+            </li>
+
+
+           <li>
+            <a class="" href="/user/search">
+                          <i class="fa fa-search"></i>
+                          <span>Search</span>
                       </a>
-            <ul class="sub">
-              <li><a class="" href="/admin/doctor">All Doctors</a></li>
-              <li><a class="" href="/admin/doctor/create">Create Doctor</a></li>
-              <li><a class="" href="/admin/doctor/dummy">Generate Dummy</a></li>
-            </ul>
           </li>
 
 
 
-            <li>
-            <a class="" href="/admin/media">
-                          <i class="fa fa-photo"></i>
-                          <span>Media</span>
+          <li>
+            <a class="" href="/admin/users/profile/{{loggedUser.id}}">
+                          <i class="fa fa-bars"></i>
+                          <span>Leadership</span>
                       </a>
           </li>
 

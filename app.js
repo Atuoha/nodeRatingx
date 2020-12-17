@@ -82,6 +82,11 @@ app.use(flash());
 app.use(methodOverride('_method'))
 
 
+//Passport inits
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 // sETTing local variable for flash msgs
 app.use( (req, res, next)=>{
@@ -94,9 +99,7 @@ app.use( (req, res, next)=>{
 })
 
 
-//Passport inits
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 
 // ROUTES
@@ -108,6 +111,50 @@ app.use('/', home);
 const logs = require('./routes/logins/index')
 app.use('/logs', logs);
 
+
+
+
+
+
+// ADMINISTARATION BOARD
+// admin
+const admin = require('./routes/account/admin/index')
+app.use('/admin', admin);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// USER BOARD
+// user
+const user = require('./routes/account/user/index')
+app.use('/user', user);
+
+
+
+// COMPANY
+const company = require('./routes/account/user/company')
+app.use('/user/company', company);
+
+
+// PROFILE
+const profile = require('./routes/account/user/profile')
+app.use('/user/profile', profile);
+
+
+// EMPLOYEE
+const employee = require('./routes/account/user/employee')
+app.use('/user/employee', employee);
 
 
 

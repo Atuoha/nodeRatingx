@@ -1,0 +1,67 @@
+<div class="container">
+<div class="center-algin text-center justify-content-center m-5 mx-auto">
+<div class="row">
+    <div class="col-md-5">
+        {{#if employee.file}}
+            <img src="/uploads/{{employee.file}}" width="250" class="img-circle" alt="">
+            {{else}}
+            <img src="/uploads/default.png" alt="">
+        {{/if}}
+
+    </div>
+
+    <div class="col-md-5 mt-2">
+        <table class="table table-striped table-responsive">
+            <tr>
+                <th>Full Name</th>
+                <td>{{employee.fullname}}</td>
+            </tr>
+
+            <tr>
+                <th>Email</th>
+                <td>{{employee.email}}</td>
+            </tr>
+
+
+              <tr>
+                <th>Company</th>
+                <td>{{employee.company.name}}</td>
+            </tr>
+
+
+            <tr>
+                <th>Phone</th>
+                <td>{{employee.phone}}</td>
+            </tr>
+
+
+            <tr>
+                <th>Role</th>
+                <td>{{employee.role}}</td>
+            </tr>
+
+            <tr>
+                <th>Status</th>
+                <td>{{employee.status}}</td>
+            </tr>
+
+            <tr>
+                <th>Edit Employee</th>
+                <td> <a href="/user/employee/edit/{{employee.id}}" class="btn btn-success"><i class="fa fa-pencil"></i> Edit</a></td>
+            </tr>
+
+            <tr>
+                <th>Delete Employee</th>
+                  <td>
+                      <form action="/employee/employee/delete/{{id}}?_method=DELETE" method="post">
+                          <button class="btn btn-danger" type="submit"><i class="fa fa-remove"></i></button>
+                      </form>
+                    </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+   
+
+</div>

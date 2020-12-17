@@ -8,8 +8,7 @@ module.exports = {
         return options.fn(this).replace(new RegExp(' value=\"' + selected + '\"'), '$&selected="selected"')
     },
 
-    generate_date: function(date, format){
-        
+    generate_date: function(date, format){    
         return moment(date).format(format)
     },
 

@@ -1,0 +1,104 @@
+
+<form action="/admin/Company/create" method="post" enctype="multipart/form-data">
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="" class="control-label">Company Name</label>
+                <input type="text" placeholder="Company Name" class="form-control" name="name" required autofocus>
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="" class="control-label">Company Address</label>
+                <input type="text" placeholder="Address" class="form-control" name="address" required >
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+             <div class="form-group">
+                <label for="" class="control-label">Company Website</label>
+                <input type="text" placeholder="Website" class="form-control" name="website" required >
+            </div>
+        </div>
+
+    </div>
+
+
+<div class="row">
+    <div class="col-md-4">
+         <div class="form-group">
+            <label for="" class="control-label" >City</label>
+          <input type="text" placeholder="City" class="form-control" name="city" required >
+        </div>
+    </div>
+
+       <div class="col-md-4">
+         <div class="form-group">
+            <label for="" class="control-label" >Country</label>
+          <input type="text" placeholder="Country" class="form-control" name="country" required >
+        </div>
+    </div>
+
+
+       <div class="col-md-4">
+         <div class="form-group">
+            <label for="" class="control-label" >Sector</label>
+          <input type="text" placeholder="Sector" class="form-control" name="sector" required >
+        </div>
+    </div>
+</div>
+
+    <div class="form-group">
+            <label for="" class="control-label">Imagery</label>
+            <input type="file" name="file" id="inpFile" class="form-control">
+    </div>
+
+        <div class="image-preview pull-right" id="imagePreview">
+            <img width="100" class="img-thumbnail image-preview__image" src="/uploads/img_place.png" alt=""> 
+            <span class="image-preview__default-text"> </span>
+        </div>   
+
+
+    <br>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create Company</button>
+    </div>
+
+</form>
+
+
+
+
+
+<!-- SCRIPTING FOR PREVIEWING IMAGE BEFORE UPLOADING  -->
+<script>
+
+    const inpFile = document.getElementById('inpFile');
+    const previewContainer = document.getElementById('imagePreview');
+    const previewImage = document.querySelector('.image-preview__image');
+    const previewDefault = document.querySelector('.image-preview__default-text');
+
+    inpFile.addEventListener('change',function(){
+        const file = this.files[0];
+
+        if(file){
+            const reader = new FileReader();
+            previewDefault.style.display = 'none';
+            previewImage.style.display = 'block';
+
+            reader.addEventListener('load',function(){
+                previewImage.setAttribute('src',this.result);
+                previewImage.style.width = '130px';
+            });
+            reader.readAsDataURL(file)
+        }else{
+            previewDefault.style.display = 'block';
+            previewImage.style.display = 'none';
+            previewImage.setAttribute('src',"");
+        }
+    })
+</script>

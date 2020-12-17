@@ -1,0 +1,130 @@
+<div class="container">
+    <div class="text-center">
+        <h1>Hello, {{loggedUser.fullname}}</h1>
+        <p>What do you want to do today?</p>
+        {{#ifeq loggedUser.role 'Manager'}}
+            {{#if company}}
+              <div class="alert alert-default">
+                <p>We can start by viewing the profile of the company you manage. Who knows what we could change together  
+                <a style="color:grey" href="/user/company/{{company.id}}"><b>Am totally in!</b></a>😎😍😲
+                 <a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a> 
+                </p>
+                </div>
+            {{else}}
+            
+              <div class="alert alert-default">
+                <p>We can start by adding the company you manage amongst companies here together. What do you think? 
+                <a style="color:grey" href="/user/company/create"><b>Am totally in!</b></a>🙂😲😃
+                 <a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a> 
+                </p>
+                
+            </div>
+            {{/if}}
+
+            {{#if loggedUser.company }}
+            
+                <div class="alert alert-default">
+                    <p>We can start by managing your profile who knows what we can adjust together. What do you think? 
+                    <a style="color:grey" href="/user/profile"><b>Am totally in!</b></a>😋😍🙂
+                     <a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a> 
+                    </p>
+                </div>
+                {{else}}
+                
+                    <div class="alert alert-default">
+                        <p>We can start by adding the company you manage as a part of your profile together. What do you think? 
+                        <a style="color:grey" href="/user/profile"><b>Am totally in!</b></a>🤗😮🤩
+                         <a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a> 
+                        </p>
+                    </div>
+            {{/if}}
+
+        {{/ifeq}}  
+
+        {{#ifeq loggedUser.role 'Subscriber'}}
+            {{#if loggedUser.company}}
+                
+                <div class="alert alert-default">
+                     <p>We can start by viewing the profiles of the companies people manage. Who knows what we could find together 
+                     <a style="color:grey" href="/user/company"><b>Am totally in!</b></a>🤩😲🤗
+                     <a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a> 
+                     </p>
+                </div>
+            {{else}}
+                
+                <div class="alert alert-default"> 
+                    <p>We can start by adding a company you're a part of to your profile together. What do you think?  
+                    <a style="color:grey" href="/user/profile"><b>Am totally in!</b></a>😳😲😍
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a>
+                    </p>
+                </div>
+            {{/if}}    
+
+        {{/ifeq}}  
+
+    </div>
+
+    <div class="row">
+
+        {{#ifeq loggedUser.role 'Manager'}}
+            {{#if company}}
+               <div class="col-md-4" id="colDesc">
+                    <div class="card text-center white">
+                        <i class="fa fa-building-o fa-4x"></i>
+                        <h3>VIEW COMPANY</h3>
+                       <p>View company profile. You can give company ratings and reviews</p>
+
+                        <a href="user/company/show/{{company.id}}" class="btn btn-primary">View Company</a>
+                    </div>
+                </div>
+            {{else}}
+                <div class="col-md-4" id="colDesc">
+                    <div class="card text-center white">
+                        <i class="fa fa-building-o fa-4x"></i>
+                        <h3>ADD COMPANY</h3>
+                         <p>Add company profile. Employees can give company ratings and reviews</p>
+
+                          <a href="/user/company/create" class="btn btn-primary">Add Company</a>
+                    </div>
+                </div>
+            {{/if}}
+        {{/ifeq}}
+
+        {{#ifeq loggedUser.role 'Subscriber'}}
+        <div class="col-md-4" id="colDesc">
+            <div class="card text-center white">
+                <i class="fa fa-building-o fa-4x"></i>
+                <h3>VIEW COMPANY</h3>
+                <p>View company profiles. You can give company ratings and reviews</p>
+
+                <a href="/user/company/subscribers_view" class="btn btn-primary">View Company</a>
+            </div>
+        </div>
+       {{/ifeq}} 
+
+        <div class="col-md-4" id="colDesc">
+            <div class="card text-center white">
+                <i class="fa fa-search fa-4x"></i>
+                <h3>SEARCH</h3>
+                <p>Search through our company catalogue. Find your best partners</p>
+
+                <a href="" class="btn btn-primary">Search Company</a>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-4" id="colDesc">
+            <div class="card text-center white">
+                <i class="fa fa-star fa-4x"></i>
+                <h3>RATE COMPANY</h3>
+                <p>Rate and review other companies and get your company reviewed.</p>
+
+                <a href="" class="btn btn-primary">Rate Company</a>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

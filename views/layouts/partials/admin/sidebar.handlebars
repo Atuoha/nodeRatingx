@@ -2,7 +2,18 @@
     <aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
-        <ul class="sidebar-menu">
+        <ul class="sidebar-menu" style="padding-top: 10px;" >
+          <div class="text-center" >
+            <div style="margin-top: 10px; padding-bottom:10px;"> 
+               {{#if loggedUser.file}}
+                    <img alt="" src="/uploads/{{loggedUser.file}}" width="50" class="img-circle" >
+                  {{else}}
+                    <img alt="" src="/uploads/default.png" width="50">
+                {{/if}}           
+              </div>
+              <span>Welcome,</span>
+              <h4>{{loggedUser.fullname}}</h4>
+          </div>
           <li class="active">
             <a class="" href="/admin">
                           <i class="fa fa-dashboard"></i>
@@ -18,26 +29,27 @@
           </li>
 
 
-
-            <li class="sub-menu">
-            <a href="javascript:;" class="">
-                          <i class="icofont-doctor-alt"></i>
-                          <span>Doctors</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
+           <li>
+            <a class="" href="/admin/users/profile/{{loggedUser.id}}">
+                          <i class="fa fa-building-o"></i>
+                          <span>Companies</span>
                       </a>
-            <ul class="sub">
-              <li><a class="" href="/admin/doctor">All Doctors</a></li>
-              <li><a class="" href="/admin/doctor/create">Create Doctor</a></li>
-              <li><a class="" href="/admin/doctor/dummy">Generate Dummy</a></li>
-            </ul>
+          </li>
+
+
+           <li>
+            <a class="" href="/admin/users/profile/{{loggedUser.id}}">
+                          <i class="fa fa-search"></i>
+                          <span>Search</span>
+                      </a>
           </li>
 
 
 
-            <li>
-            <a class="" href="/admin/media">
-                          <i class="fa fa-photo"></i>
-                          <span>Media</span>
+          <li>
+            <a class="" href="/admin/users/profile/{{loggedUser.id}}">
+                          <i class="fa fa-bars"></i>
+                          <span>Leadership</span>
                       </a>
           </li>
 

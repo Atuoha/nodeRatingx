@@ -24,9 +24,48 @@
 
       <div class="top-nav notification-row">
         <ul class="nav pull-right top-menu">
+          {{#if loggedUser}}
+                <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <span class="profile-ava">
+                    {{#if loggedUser.file}}
+                      <img alt="" src="/uploads/{{loggedUser.file}}" width="30">
+                    {{else}}
+                      <img alt="" src="/uploads/default.png" width="30">
+                    {{/if}}
+                </span>
+
+
+                <span class="username">{{loggedUser.fullname}}</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu extended logout">
+              <div class="log-arrow-up"></div>
+              <li class="eborder-top">
+                <a href="/admin/users/profile/{{loggedUser.id}}"><i class="icon_profile"></i> My Profile</a>
+              </li>
+
+              {{#ifeq loggedUser.role 'Admin'}}
+               <li>
+                <a href="/admin"><i class="icon_house_alt"></i> Dashboard</a>
+              </li>
+              {{/ifeq}}
+
+               {{#ifeq loggedUser.role 'Manager'}}
+               <li>
+                <a href="/user"><i class="icon_house_alt"></i> Dashboard</a>
+              </li>
+              {{/ifeq}}
+
+              <li>
+                <a href="/logs/logout"><i class="icon_key_alt"></i> Log Out</a>
+              </li>
+             
+          {{else}}
           <li class="dropdown">
                <a href="/logs/signin"><i class="fa fa-sign-in"></i> Sign in</a>
           </li>
+          {{/if}}
         </ul>
       </div>
     </header>

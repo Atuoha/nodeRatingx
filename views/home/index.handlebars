@@ -1,1 +1,94 @@
-home
+<div class="container">
+  <div class="jumbotron text-white text-center">
+                <h1 ><strong>nodeRatings<i class="fa fa-star" style="color:gold"></i></strong></h1>
+                <p style="color:grey; font-size: 70%">nodeRatings is an implementation of a rating and review system using NodeJS and some few modules</p><br>
+
+                {{#if loggedUser}}
+                    {{#ifeq loggedUser.role 'Admin'}}
+                        <a href="/admin" class="btn btn-lg  btn-success">Logged in as {{ loggedUser.fullname }}</a>
+                        <a class="btn btn-lg btn-danger" href="/logs/logout">Logout</a>
+                    {{/ifeq}}
+
+                    {{#ifeq loggedUser.role 'Manager'}}
+                        <a href="/user" class="btn btn-lg btn-success">Logged in as {{ loggedUser.fullname }}</a>
+                        <a class="btn btn-lg btn-danger" href="/logs/logout">Logout</a>
+                    {{/ifeq}}
+
+
+                    {{#ifeq loggedUser.role 'Subscriber'}}
+                        <a href="/user" class="btn btn-lg btn-success">Logged in as {{ loggedUser.fullname }}</a>
+                        <a class="btn btn-danger btn-lg" href="/logs/logout">Logout</a>
+                    {{/ifeq}}
+
+                {{else}}
+                  <a style="color:white; background-color: #3B5998" class="btn btn-lg " href="/logs/auth/facebook"><i class="fa fa-facebook"></i> Sign in</a>
+                  <a href="/logs/signin" class="btn btn-lg btn-success">Signin now</a>
+                {{/if}}
+                 
+            </div>
+        
+
+    <div class="row ">
+
+       
+        <div class="col-md-4" id="colDesc">
+            <div class="card text-center white">
+                <i class="fa fa-building-o fa-4x"></i>
+                <h3>VIEW COMPANY</h3>
+                <p>View company profiles. You can give company ratings and reviews</p>
+
+                <a href="/company" class="btn btn-primary">View Company</a>
+            </div>
+        </div>
+
+        <div class="col-md-3 offset-3" id="colDesc">
+            <div class="card text-center white">
+                <i class="fa fa-search fa-4x"></i>
+                <h3>SEARCH</h3>
+                <p>Search through our company catalogue. Find your best partners</p>
+
+                <a href="" class="btn btn-primary">Search Company</a>
+            </div>
+        </div>
+
+
+
+        <div class="col-md-4 offset-1" id="colDesc">
+            <div class="card text-center white">
+                <i class="fa fa-star fa-4x"></i>
+                <h3>RATE COMPANY</h3>
+                <p>Rate and review other companies and get your company reviewed.</p>
+
+                <a href="" class="btn btn-primary">Rate Company</a>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<style>
+    #colDesc{
+    margin:10px 0 10px 20px;
+    min-height: 235px;
+    background-color: white;
+    padding-top: 15px;
+}
+
+@media(max-width:720px){
+      #colDesc{
+    margin:10px 0 0 0;
+    min-height: 235px;
+    background-color: white;
+    padding-top: 15px;
+}
+}
+
+
+
+
+
+</style>

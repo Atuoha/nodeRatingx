@@ -1,23 +1,13 @@
+
 {{#if error_msg}}
-    <div class="alert alert-danger">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a> 
-        {{error_msg}} 
-    </div>
+    <div class="alert alert-danger">  <a href="#" class="close" data-dismiss="alert" aria-label="close" ><i class="fa fa-remove"></i></a>  {{error_msg}} </div>
 {{/if}}
 
 {{#if error}}
-    {{#each error}}
-        <div class="alert alert-danger"><i class="fa fa-remove"></i>
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  
-            {{this}} 
-        </div>
-    {{/each}}
+    <div class="alert alert-danger">  <a href="#" class="close" data-dismiss="alert" aria-label="close" ><i class="fa fa-remove"></i></a>  {{error}} </div>
 {{/if}}
 
 
 {{#if success_msg}}
-    <div class="alert alert-success"><i class="fa fa-check"></i>
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-      {{success_msg}} 
-    </div>
+    <div class="alert alert-success">  <a href="#" class="close" data-dismiss="alert" aria-label="close" ><i class="fa fa-remove"></i></a>  {{success_msg}} </div>
 {{/if}}

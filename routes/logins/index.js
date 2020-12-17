@@ -12,7 +12,10 @@ const express  = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     EMAIL_ADDRESS = process.env.EMAIL_ADDRESS,
-    EMAIL_PASS = process.env.EMAIL_PASS
+    EMAIL_PASS = process.env.EMAIL_PASS,
+    FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID,
+    FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET,
+    FacebookStrategy = require('passport-facebook').Strategy;
     
 
 
@@ -73,6 +76,11 @@ router.post('/signup', (req, res)=>{
                     bcrypt.hash(req.body.password, salt, (err, hash)=>{
                         if(err)console.log(err)
                         newUser.password = hash
+
+                        if(req.body.role){
+                            newUser.role = req.body.role  // Assigning managerial priviledges to an account
+                        }
+
                         newUser.save()
                         .then(savedUser=>{
                             req.flash('success_msg', 'Account created. Signin now')
@@ -103,7 +111,7 @@ passport.use(new LocalStrategy({usernameField: 'email'}, (email, password, done)
                 if(!matched){
                     return done(null, false, {message: 'Password mismatch. Try again!'});
                 }else{
-                    console.log(`logged in as ${user.email}`)
+                    console.log(`logged in as ${user.email} -> ${user.role}`)
                     return done(null, user)
                 }
             })
@@ -128,15 +136,73 @@ router.post('/signin', passport.authenticate('local', {
         // successRedirect: '/admin',
         failureRedirect: '/logs/signin',
         failureFlash: true
-    }),(req, res, next)=>{
-        if(req.body.remember){
-            req.session.cookie.maxAge = 30*24*60*60*1000  // session for thirty 30
+}),(req, res)=>{
+    if(req.body.remember){
+        req.session.cookie.maxAge = 30*24*60*60*1000  // session for thirty 30
+    }else{
+        req.session.cookie.expires = null
+    }
+    User.findOne({email: req.body.email})
+    .then(user=>{
+        if(user.role === 'Admin'){
+            res.redirect('/admin')
         }else{
-            req.session.cookie.expires = null
+            res.redirect('/user')
         }
-        res.redirect('/admin')
-        next()
     })
+    .catch(err=>console.log(err))
+})
+
+
+
+// facebook passport strategy
+passport.use(new FacebookStrategy({
+    clientID: FACEBOOK_APP_ID,
+    clientSecret: FACEBOOK_APP_SECRET,
+    callbackURL: "http://localhost:1777/logs/auth/facebook/callback",
+    profileFields: ['id', 'email', 'name', 'picture.type(large)'],
+    passReqToCallback: true
+  },
+  function(req, accessToken, refreshToken, profile, done) {
+    User.findOne({facebookID: profile.id})
+    .then(user=>{
+        console.log(profile)
+        if(user){
+           return done(null, user);
+        }else{
+            let newUser = new User()
+            if(profile._json.email){
+                newUser.email = profile._json.email;
+            }else{
+                newUser.email = `${profile._json.first_name}@gmail.com`
+            }        
+            newUser.facebookID = profile .id;
+            newUser.fullname = profile.displayName;
+            newUser.tokens.push({accessToken: accessToken})
+            newUser.save()
+            .then(user=>{
+             return done(null, user);
+            })
+            .catch(err=>{
+                 done(null, err)
+            })
+        }
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+  }
+));
+
+
+router.get('/auth/facebook', passport.authenticate('facebook', {scope: ['public_profile', 'email']} ));
+
+
+router.get('/auth/facebook/callback', passport.authenticate('facebook',
+   { successRedirect: '/user',
+    failureRedirect: '/logs/sign' 
+   }
+));
 
 
 

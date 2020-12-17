@@ -9,11 +9,23 @@ const userSchema = new Schema({
 
     password:{type: String},
 
-    role:{type: String,default: 'Subscriber'},
+    facebookID:{type: String},
+
+    tokens: Array,
+
+    status:{type: String, default: 'Active'},
+
+    phone:{type: String, default: ''},
+
+    file:{type: String},
+
+    role:{type: String, default: 'Subscriber'},
+
+    position:{type: String, default: 'Employee'},
 
     company:{
-       name:{type: String, default: ''},
-       file: {type: String, default: ''}
+        type: Schema.Types.ObjectId,
+        ref: 'companies'
     },
     passwordResetToken:{type: String, default: ''},
     passwordResetExpires: {type: Date, default: Date.now}
