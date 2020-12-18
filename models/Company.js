@@ -40,15 +40,6 @@ const companySchema = new Schema({
        ref: 'users'
     }],
 
-    companyRating:[{
-        companyName:{type: String, default: ''},
-        userFullname:{type: String, default: ''},
-        userPosition:{type: String, default: ''},
-        userRating:{type: Number, default: 0},
-        userReview:{type: String, default: ''},
-        companyFile:{type: String, default: ''},
-    }],
-
     ratingNumber: [Number],
     ratingSum:{type: Number, default: 0},
 

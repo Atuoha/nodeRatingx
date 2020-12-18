@@ -157,6 +157,12 @@ const employee = require('./routes/account/user/employee')
 app.use('/user/employee', employee);
 
 
+// RATING/REVIEW
+const rating = require('./routes/account/user/rating')
+app.use('/user/company/rating', rating);
+
+
+
 
 app.listen(port, ()=>{
     console.log(`Running on port ${port}`)

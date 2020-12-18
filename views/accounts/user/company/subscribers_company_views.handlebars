@@ -4,28 +4,10 @@
             <h1 ><strong>Companies <i class="fa fa-building-o" style="color:gold"></i></strong></h1>
         <p style="color:grey; font-size: 70%">nodeRatings is an implementation of a rating and review system using NodeJS and some few modules</p><br>
 
-
-         {{#if loggedUser}}
-                    {{#ifeq loggedUser.role 'Admin'}}
-                        <a href="/admin/company/create" class="btn btn-lg  btn-success">Create Company</a>
-                        <a class="btn btn-lg btn-danger" href="/admin/company">View</a>
-                    {{/ifeq}}
-
-                    {{#ifeq loggedUser.role 'Manager'}}
-                        <a href="/user/company/create" class="btn btn-lg  btn-success">Create Company</a>
-                        <a class="btn btn-lg btn-danger" href="/user/company">View</a>
-                    {{/ifeq}}
-
-
-                    {{#ifeq loggedUser.role 'Subscriber'}}
-                        <a href="/user/company/create" class="btn btn-lg  btn-success">Create Company</a>
-                        <a class="btn btn-lg btn-danger" href="/user/company">View</a>
-                    {{/ifeq}}
-
-                {{else}}
-                  <a style="color:white; background-color: #3B5998" class="btn btn-lg " href="/logs/auth/facebook"><i class="fa fa-facebook"></i> Sign in</a>
-                  <a href="/logs/signin" class="btn btn-lg btn-success">Signin now</a>
-                {{/if}}
+          {{#ifeq loggedUser.role 'Manager'}}
+                <a href="/user/company/create" class="btn btn-lg  btn-success">Create Company</a>
+                <a class="btn btn-lg btn-danger" href="/user/company">List View</a>
+          {{/ifeq}}          
     </div>
 
 <div class="container">
@@ -45,8 +27,8 @@
 
                                  
                             </p>
-                             <a class="btn btn-success sm-none" href="/user/company/rating/{{id}}">Rate <i class="fa fa-star"></i></a><br>
-                             <a class="btn btn-warning sm-none" href="/single_company/{{id}}">View <i class="fa fa-eye"></i></a>
+                             <a class="btn btn-success sm-none" href="/user/company/rating/create/{{id}}">Rate <i class="fa fa-star"></i></a><br>
+                             <a class="btn btn-warning sm-none" href="/user/company/show/{{id}}">View <i class="fa fa-eye"></i></a>
 
 
                         </div>
@@ -70,8 +52,8 @@
                                 </tr>
                             </table>
 
-                             <a class="btn btn-success lg-none" href="/user/company/rating/{{id}}">Rate <i class="fa fa-star"></i></a>
-                             <a class="btn btn-warning lg-none" href="/single_company/{{id}}">View <i class="fa fa-eye"></i></a>
+                             <a class="btn btn-success lg-none" href="/user/company/rating/create/{{id}}">Rate <i class="fa fa-star"></i></a>
+                             <a class="btn btn-warning lg-none" href="/user/company/show/{{id}}">View <i class="fa fa-eye"></i></a>
                         </div>
                     </div>
                 </div>

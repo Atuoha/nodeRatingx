@@ -8,19 +8,14 @@
          {{#if loggedUser}}
                     {{#ifeq loggedUser.role 'Admin'}}
                         <a href="/admin/company/create" class="btn btn-lg  btn-success">Create Company</a>
-                        <a class="btn btn-lg btn-danger" href="/admin/company">View</a>
+                        <a class="btn btn-lg btn-danger" href="/admin/company">View in Control</a>
                     {{/ifeq}}
 
                     {{#ifeq loggedUser.role 'Manager'}}
                         <a href="/user/company/create" class="btn btn-lg  btn-success">Create Company</a>
-                        <a class="btn btn-lg btn-danger" href="/user/company">View</a>
+                        <a class="btn btn-lg btn-danger" href="/user/company">View in Control</a>
                     {{/ifeq}}
 
-
-                    {{#ifeq loggedUser.role 'Subscriber'}}
-                        <a href="/user/company/create" class="btn btn-lg  btn-success">Create Company</a>
-                        <a class="btn btn-lg btn-danger" href="/user/company">View</a>
-                    {{/ifeq}}
 
                 {{else}}
                   <a style="color:white; background-color: #3B5998" class="btn btn-lg " href="/logs/auth/facebook"><i class="fa fa-facebook"></i> Sign in</a>

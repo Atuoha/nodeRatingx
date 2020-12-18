@@ -28,7 +28,7 @@
                                     <input type="text" readonly value="Company: {{company.name}}" class="form-control">
                                 {{else}}
                                 <label for="" class="control-label">Company</label>
-                                <select id="from_place" required class="selectpicker select show-tick" data-width="100%" data-live-search="true" title="Select Company" data-size="4" data-header="Select Company" name="company">
+                                <select id="from_place" class="selectpicker select show-tick" data-width="100%" data-live-search="true" title="Select Company" data-size="4" data-header="Select Company" name="company">
                                     {{#each companies}}
                                     <option value="{{id}}">{{name}}</option>             
                                     {{/each}}

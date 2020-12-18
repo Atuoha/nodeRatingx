@@ -41,11 +41,11 @@
         </div>
 
         <div class="reviews" style="margin-top: 10px;">
-            <a class="btn btn-success btn-block" href="/user/company/rating/{{company.id}}">Rate Company <i class="fa fa-star" style="color: gold;"></i></a>
+            <a class="btn btn-success btn-block" href="/user/company/rating/create/{{company.id}}">Rate Company <i class="fa fa-star" style="color: gold;"></i></a>
 
              <ol class="breadcrumb">
               <li><i class="fa fa-file-o"></i>Reviews (5)</li>
-              <li><a href="" style="color:grey">Write Review <i class="fa fa-pencil"></i></a></li>
+              <li><a href="/user/company/rating/create/{{company.id}}" style="color:grey">Write Review <i class="fa fa-pencil"></i></a></li>
             </ol>
 
             <div class="written-reviews">
@@ -124,7 +124,7 @@
             {{#ifeq loggedUser.role 'Subscriber'}}
             <tr>
                 <th><i class="fa fa-user-plus"></i></th>
-                <td><a class="btn btn-default" href="/user/employee/edit/{{loggedUser._id}}/company/{{company.id}}">Add company to profile<i class="fa fa-user-plus"></i></a></td>
+                <td><a class="btn btn-default" href="/user/profile/edit/{{loggedUser._id}}/company/{{company.id}}">Add company to profile<i class="fa fa-user-plus"></i></a></td>
             </tr>
             {{/ifeq}}
 

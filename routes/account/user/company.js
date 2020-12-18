@@ -28,11 +28,21 @@ router.get('/', (req, res)=>{
 })
 
 
+// router.get('/rating/create/:id', (req, res)=>{
+//     // Company.find({user: req.user})'
+//     Company.findOne({_id: req.params.id})
+//     .then(company=>{
+//         res.render('accounts/user/rating/create', {title: 'Rating|Company', company: company})
+//     })
+//     .catch(err=>console.log(err))
+// })
+
+
 router.get('/subscribers_view', (req, res)=>{
     // Company.find({user: req.user})'
     Company.find()
     .then(companies=>{
-        res.render('accounts/user/company/subscribers_company_view', {title: 'Companies|nodeRatings', companies: companies})
+        res.render('accounts/user/company/subscribers_company_views', {title: 'Companies|nodeRatings', companies: companies})
     })
     .catch(err=>console.log(err))
 })
@@ -136,8 +146,18 @@ router.post('/create', (req, res)=>{
             newCompany.user.push(req.user)
             newCompany.save()
             .then(response=>{
-                req.flash('success_msg', 'Company registered successfully')
-                res.redirect('/user/company')
+                // adding company to logged in user's profile
+                User.findOne({_id: req.params.id})
+                .then(user=>{
+                    user.company = newCompany
+                    user.save()
+                    .then(response=>{
+                        req.flash('success_msg', 'Company registered successfully')
+                        res.redirect('/user/company')
+                    })
+                    .catch(err=>console.log(err))
+                })
+               
             })
             .catch(err=>console.log(err))
  

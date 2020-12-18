@@ -42,7 +42,7 @@ router.get('/edit/:id', (req, res)=>{
 router.get('/edit/:id/company/:comp_id', (req, res)=>{
     User.findOne({_id: req.params.id})
     .populate('company')
-    .then(employee=>{
+    .then(profile=>{
         Company.findOne({_id: req.params.comp_id})
         .populate('company')
         .then(company=>{
