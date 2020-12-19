@@ -4,6 +4,7 @@ const express = require('express'),
     router = express.Router(),
     Company = require('../../../models/Company'),
     User = require('../../../models/User'),
+    Rating = require('../../../models/Rating'),
     faker = require('faker'),
     fs = require('fs'),
     { isEmpty } = require('../../../helpers/upload-helpers');
@@ -28,14 +29,7 @@ router.get('/', (req, res)=>{
 })
 
 
-// router.get('/rating/create/:id', (req, res)=>{
-//     // Company.find({user: req.user})'
-//     Company.findOne({_id: req.params.id})
-//     .then(company=>{
-//         res.render('accounts/user/rating/create', {title: 'Rating|Company', company: company})
-//     })
-//     .catch(err=>console.log(err))
-// })
+
 
 
 router.get('/subscribers_view', (req, res)=>{
@@ -106,7 +100,16 @@ router.get('/show/:id', (req, res)=>{
     Company.findOne({_id: req.params.id})
     .populate('user')
     .then(company=>{
-        res.render('accounts/user/company/show', {title: 'Company|Show', company: company})
+        Rating.find({company: req.params.id})
+        .populate('company')
+        .populate('user')
+        .then(ratings=>{
+            let keys =  Object.keys(ratings);
+            let ratingCount = keys.length
+            let averageRating  = company.ratingSum/company.ratingNumber
+            res.render('accounts/user/company/show', {title: 'Company|Show', company: company, ratings: ratings, ratingCount: ratingCount, averageRating: parseFloat(averageRating,2) })
+        })
+        .catch(err=>console.log(err))
     })
     .catch(err=>console.log(err))
 })

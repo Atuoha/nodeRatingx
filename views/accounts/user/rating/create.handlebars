@@ -1,12 +1,12 @@
 <div class="container">
 
-<h3><i class="fa fa-star" style="color:#ffd700;"></i> <b>{{company.name}}</b></h3>
+<h3><i class="fa fa-star-half" style="color:#ffd700;"></i> <b>{{company.name}}</b></h3>
 
 
-<form action="/user/company/rating/create" method="post">
+<form action="/user/company/rating/create/{{company.id}}" method="post" id="rating_form">
 
     <div class="form-group">
-        <label for="">Rating Count</label><br>
+        <label for="">Rating Stars</label><br>
         <i class="fa fa-star fa-5x" ></i>
         <i class="fa fa-star fa-5x"></i>
         <i class="fa fa-star fa-5x"></i>
@@ -14,14 +14,14 @@
         <i class="fa fa-star fa-5x"></i>
 
     <input type="hidden" class="form-control" name="rating" id="rating">
-    <input type="hidden" value="{{company.id}}" class="form-control" name="company">
+    <input type="hidden" id="company" value="{{company.id}}" class="form-control" name="company">
 
     <p id="rating-text"></p>
     </div>
 
     <div class="form-group">
         <label for="">Write Review</label>
-        <textarea name="review" id="textearea" cols="30" class="form-control" rows="9"></textarea>
+        <textarea name="review" placeholder="What's on your mind?" id="textearea" cols="30" class="form-control" rows="9" required=""></textarea>
     </div>
 
     <div class="form-group">
@@ -39,20 +39,7 @@
 
 
 <script src="/admin/jquery-2.2.4.min.js"></script>
-<script>
-    let ratings = 0;
-    $('.fa-5x').mouseover(function(e){
+<script src="/admin/js/rating.js"></script>
+<script src="/home/vendor/sweetalert.min.js"></script>
 
-        let color = $(this).css('color');
-        if(color != 'rgb(255, 215, 0)'){
-            $(this).css('color', 'gold')
-            ratings += 1
-        }else{
-             $(this).css('color', 'rgb(214, 211, 211)')
-             ratings -= 1
-        }
-        $('#rating').attr('value', ratings)
-        $('#rating-text').html(`<b>${ratings}.0 Rating</b>` )
 
-    })
-</script>

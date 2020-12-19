@@ -10,8 +10,12 @@
     <div class="col-md-7">
         <div class="row">
             <div class="col-md-4">
-                <div class="card text-center">
-                    <h1 style="color: rgb(15, 201, 15);"><b>5</b></h1>
+                <div class="card rating_sec text-center">
+                    {{#if company.ratingNumber}}
+                        <h1 style="color: rgb(15, 201, 15);"><b>{{company.ratingNumber}}</b></h1>
+                    {{else}}
+                         <h1 style="color: rgb(15, 201, 15);"><b>0</b></h1>
+                    {{/if}}
                     <h4>Ratings</h4>
 
                     <p>Total ratings received</p>
@@ -20,8 +24,12 @@
 
 
              <div class="col-md-4">
-                <div class="card text-center">
-                    <h1 style="color: gold;"><b>25</b></h1>
+                <div class="card rating_sec text-center">
+                    {{#if company.ratingSum}}
+                         <h1 style="color: gold;"><b>{{company.ratingSum}}</b></h1>
+                    {{else}}
+                         <h1 style="color: gold;"><b>0</b></h1>
+                    {{/if}}
                     <h4>Total Stars</h4>
 
                     <p>Total stars received</p>
@@ -31,8 +39,12 @@
 
 
              <div class="col-md-4">
-                <div class="card text-center">
-                    <h1 style="color: rgb(15, 201, 15)"><b>5.5</b></h1>
+                <div class="card rating_sec text-center">
+                    {{#if company.ratingSum}}
+                         <h1 style="color: rgb(15, 201, 15)"><b>{{averageRating}}</b></h1>
+                    {{else}}
+                         <h1 style="color: rgb(15, 201, 15)"><b>0.0</b></h1>
+                    {{/if}}
                     <h4>Average Rating</h4>
 
                     <p>Based on five reviews</p>
@@ -44,12 +56,101 @@
             <a class="btn btn-success btn-block" href="/user/company/rating/create/{{company.id}}">Rate Company <i class="fa fa-star" style="color: gold;"></i></a>
 
              <ol class="breadcrumb">
-              <li><i class="fa fa-file-o"></i>Reviews (5)</li>
+              <li><i class="fa fa-file-o"></i>Reviews ({{ratingCount}})</li>
               <li><a href="/user/company/rating/create/{{company.id}}" style="color:grey">Write Review <i class="fa fa-pencil"></i></a></li>
             </ol>
 
             <div class="written-reviews">
+                {{!-- Reviews Here --}}
+               {{#if ratings}} 
+                {{#each ratings}}
+                <div class="review_card card">
+                    <div class="row">
+                       <div class="text-center">
 
+                      
+                        <div class="col-md-4">
+                           {{#if user.file}}
+                                <img alt="" src="/uploads/{{user.file}}" width="80" class="img-circle img-thumbnail" >
+                            {{else}}
+                                <img alt="" src="/uploads/default.png" width="80">
+                            {{/if}}  
+
+                            
+                            <p>
+                                {{#ifeq rating 1}}
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star"></i>  
+                                 <i class="fa fa-star"></i>  
+                                 <i class="fa fa-star"></i>  
+                                 <i class="fa fa-star"></i>  
+                                {{/ifeq}}  
+
+                                 {{#ifeq rating 2}}
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star"></i>  
+                                 <i class="fa fa-star"></i>  
+                                 <i class="fa fa-star"></i>  
+                                {{/ifeq}}  
+
+                                 {{#ifeq rating 3}}
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star"></i>  
+                                 <i class="fa fa-star"></i>  
+                                {{/ifeq}}  
+
+                                 {{#ifeq rating 4}}
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star"></i>  
+                                {{/ifeq}}  
+
+
+                                {{#ifeq rating 5}}
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                {{/ifeq}}  
+                            </p>
+                           </div>
+                        </div>
+
+
+                         <div class="col-md-8">
+                             <table>
+                                 <p><b>Rating Data</b></p>
+                                  <tr>
+                                    <th><i class="fa fa-user"></i></th>
+                                    <td>{{user.fullname}} </a></td>
+                                </tr> 
+
+                                 <tr>
+                                    <th><i class="fa fa-briefcase"></i> </th>
+                                    <td> {{user.position}} </a></td>
+                                </tr> 
+
+                                 <tr>
+                                    <th><i class="fa fa-pencil"></i></th>
+                                    <td>...{{review}} </a></td>
+                                </tr> 
+                             </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                {{/each}}
+
+               {{else}}
+                    <div class="alert alert-danger">No Rating Yet! <a style="color: gray;"  href="/user/company/rating/create/{{company.id}}"> Why not give a star <i class="fa fa-star" style="color: gold;"></i></a></div> 
+               {{/if}}
             </div>
         </div>
 
@@ -140,8 +241,24 @@
 
 
 <style>
-    .card{
+    .rating_sec{
         min-height: 100px;
         border: 1px inset rgb(228, 227, 227);
+        background-color: white;
+
     }
+    
+    .review_card{
+        min-height: 50px;
+        border: 1px solid white;
+        background-color: white;
+        padding: 2px;
+        border-radius: 2px;
+    }
+
+    .table{
+        margin-top: 0px;
+    }
+    
 </style>
+

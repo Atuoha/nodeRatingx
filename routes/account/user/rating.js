@@ -35,4 +35,31 @@ router.get('/create/:id', (req, res)=>{
 })
 
 
+router.post('/create/:id', (req, res)=>{
+    
+    const newRating = new Rating()
+    newRating.rating = req.body.rating
+    newRating.review = req.body.review
+    newRating.company = req.body.company
+    newRating.user = req.user
+    newRating.save()
+    .then(response=>{
+        Company.findOne({_id: req.params.id})
+        .then(company=>{
+            company.ratingSum += parseInt(req.body.rating)
+            company.ratingNumber += 1
+            // company.ratingPoints.push(req.body.rating)
+
+            company.save()
+            .then(response=>{
+                res.redirect(`/user/company/show/${req.body.company}`)
+            }) 
+            .catch(err=>console.log(err))
+        })
+        .catch(err=>console.log(err))
+    })
+    .catch(err=>console.log(err))
+})
+
+
 module.exports = router
