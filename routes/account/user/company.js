@@ -43,6 +43,16 @@ router.get('/subscribers_view', (req, res)=>{
 
 
 
+router.get('/leaderboard', (req, res)=>{
+    Company.find()
+    .sort({'ratingSum': -1})
+    .then(companies=>{
+        res.render('accounts/user/company/leaderboard', {title: 'Leaderboard|nodeRatings', companies: companies})
+    })
+    .catch(err=>console.log(err))
+})
+
+
 router.get('/create', (req, res)=>{
     if(req.user.role !== 'Manager'){
         req.flash('error_msg', 'Access Denied! Action requires managerial certifications ):')
@@ -74,26 +84,25 @@ router.get('/edit/:id', (req, res)=>{
         req.flash('error_msg', 'Access Denied! Action requires managerial certifications ):')
         res.redirect('/user/company')
     }
+        
     Company.findOne({_id: req.params.id})
     .then(company=>{
 
-        Company.findOne({user: req.user})
-        .then(user_with_company=>{
-            if(!user_with_company){
+        company.user.forEach(account=>{
+            if(account != req.user.id){
+                // this is still giving me errors. search how to loop through an array using foreach and stop whence a data that looks like what we are looking for is seen if not....
+                console.log('not recognised')
                 req.flash('error_msg', 'Access Denied! You can only edit companies you created ):')
                 res.redirect('/user/company')
+            }else{
+                console.log('recognised')
+                res.render('accounts/user/company/edit', {title: 'Company|Edit', company: company})
             }
         })
-        .catch(err=>console.log(err))
-
-        // if(company.user != req.user.id){
-        //     req.flash('error_msg', 'Access Denied! You can only edit companies you created ):')
-        //     res.redirect('/user/company')
-        // }
-
-        res.render('accounts/user/company/edit', {title: 'Company|Edit', company: company})
+      
     })
     .catch(err=>console.log(err))
+
 })
 
 router.get('/show/:id', (req, res)=>{
@@ -107,12 +116,63 @@ router.get('/show/:id', (req, res)=>{
             let keys =  Object.keys(ratings);
             let ratingCount = keys.length
             let averageRating  = company.ratingSum/company.ratingNumber
-            res.render('accounts/user/company/show', {title: 'Company|Show', company: company, ratings: ratings, ratingCount: ratingCount, averageRating: parseFloat(averageRating,2) })
+            res.render('accounts/user/company/show', {title: `${company.name}`, company: company, ratings: ratings, ratingCount: ratingCount, averageRating: parseFloat(averageRating,1) })
         })
         .catch(err=>console.log(err))
     })
     .catch(err=>console.log(err))
 })
+
+
+
+
+
+router.get('/search', (req, res)=>{
+    res.render('home/search', {title: 'Search|nodeRatings'})
+  })
+  
+  
+  router.post('/search', (req, res)=>{
+      let name =  req.body.search
+      let regex = new RegExp(name, 'i')
+  
+      Company.find({'$or': [{'name': regex}]})
+      .then(companies=>{
+        if(companies.length > 1){
+          // found more than a company 
+           res.render('accounts/user/company/subscribers_company_views', {title: 'Searched|nodeRatings', companies: companies})
+        }else{
+          //  found a single company
+            Company.findOne({'$or': [{'name': regex}]})
+            .populate('user')
+            .then(company=>{
+  
+              if(!company){
+                req.flash('error_msg', 'No company with such name')
+                res.redirect('/search')
+              }
+  
+  
+                Rating.find({company: req.params.id})
+                .populate('company')
+                .populate('user')
+                .then(ratings=>{
+                    let keys =  Object.keys(ratings);
+                    let ratingCount = keys.length
+                    let averageRating  = company.ratingSum/company.ratingNumber
+                    res.render('account/user/company/show', {title: `${company.name}`, company: company, ratings: ratings, ratingCount: ratingCount, averageRating: parseFloat(averageRating,1) })
+                })
+                .catch(err=>console.log(err))
+            })
+            .catch(err=>console.log(err))
+        }
+       
+      })
+      .catch(err=>console.log(err))
+  })
+
+
+
 
 
 router.post('/create', (req, res)=>{
@@ -149,8 +209,9 @@ router.post('/create', (req, res)=>{
             newCompany.user.push(req.user)
             newCompany.save()
             .then(response=>{
+
                 // adding company to logged in user's profile
-                User.findOne({_id: req.params.id})
+                User.findOne({_id: req.user})
                 .then(user=>{
                     user.company = newCompany
                     user.save()
@@ -160,6 +221,7 @@ router.post('/create', (req, res)=>{
                     })
                     .catch(err=>console.log(err))
                 })
+                .catch(err=>console.log(err))
                
             })
             .catch(err=>console.log(err))
@@ -168,6 +230,8 @@ router.post('/create', (req, res)=>{
     })
     .catch(err=>console.log(err))
 })
+
+
 
 
 router.post('/dummy', (req, res)=>{
@@ -207,10 +271,10 @@ router.put('/update/:id', (req, res)=>{
     Company.findOne({_id: req.params.id})
     .then(company=>{
 
-        if(company.user != req.user.id){
-            req.flash('error_msg', 'Access Denied! You can only edit companies you created ):')
-            res.redirect('/user/company')
-        }
+        // if(company.user != req.user.id){
+        //     req.flash('error_msg', 'Access Denied! You can only edit companies you created ):')
+        //     res.redirect('/user/company')
+        // }
 
         let filename = company.file
         if(!isEmpty(req.files)){

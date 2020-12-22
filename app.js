@@ -164,6 +164,11 @@ app.use('/user/company/rating', rating);
 
 
 
+// RATING/REVIEW
+const messaging = require('./routes/account/user/messaging')
+app.use('/user/messaging', messaging);
+
+
 app.listen(port, ()=>{
     console.log(`Running on port ${port}`)
 })    

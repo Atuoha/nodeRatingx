@@ -1,0 +1,115 @@
+
+<div class="container">
+  <div class="jumbotron bg-secondary text-white text-center">
+            <h1 ><strong>Companies <i class="fa fa-building-o" style="color:gold"></i></strong></h1>
+        <p style="color:grey; font-size: 70%">  | Companies are ranked in the order at which they appear in the view sequence |</p><br>
+
+      
+    </div>
+
+<div class="container">
+    <div class="row">
+        {{#if companies}}
+            {{#each companies}}
+                <div class="col-md-4 cols">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-l4">
+                             <img src="/uploads/{{file}}" class="img-thumbnail" alt="" width="200"> <br> 
+                             <p>
+                               <b>Total Ratings:</b> {{ratingNumber}}                                
+                            </p>
+                             <a class="btn btn-success sm-none" href="/user/company/rating/create/{{id}}">Rate <i class="fa fa-star fa-spin"></i></a><br>
+                             <a class="btn btn-warning sm-none" href="/user/company/show/{{id}}">View <i class="fa fa-eye"></i></a>
+
+
+                        </div>
+
+                        <div class="col-md-8 col-sm-8 col-l8">
+                            <h3>{{name}}</h3>
+                            <table>
+                                <tr>
+                                    <th><i class="fa fa-building-o"></i></th>
+                                    <td>{{sector}}</td>
+                                </tr>
+
+                                 <tr>
+                                    <th><i class="fa fa-map-marker"></i></th>
+                                    <td>{{address}}, {{city}}, {{country}}.</td>
+                                </tr>
+                        
+                                 <tr>
+                                    <th><i class="fa fa-external-link"></i></th>
+                                    <td><a style="color:grey" href="{{website}}" target="_blank">{{website}}</a></td><br>
+                                </tr>
+
+                                 <tr>
+                                    <th><i class="fa fa-star"></i></th>
+                                    <td>{{ratingSum}} Total Stars<br>
+                                </tr>
+                            </table>
+                            </table>
+
+                             <a class="btn btn-success lg-none" href="/user/company/rating/{{id}}">Rate <i class="fa fa-star"></i></a>
+                             <a class="btn btn-warning lg-none" href="/single_company/{{id}}">View <i class="fa fa-eye"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+
+           
+        {{else}}
+        <div class="alert alert-success">No company to display</div>
+        {{/if}} 
+
+    </div>
+    
+    <nav class="text-center justify-content-center">
+     <ul class="pagination text-center">									
+        {{#paginate current=current pages=pages}}{{/paginate}}             
+    </ul>
+    </nav>
+
+    
+</div>
+
+
+
+
+
+<style>
+    .cols{
+        min-height: 220px;
+        padding: 5px;
+        background-color: white;
+        margin: 10px 0 0 30px;
+        width:30%
+    }
+
+    .sm-none{
+        display: inline-block;
+        margin-top: 5px;
+    }
+
+    .lg-none{
+        display: none;
+    }
+
+    
+    
+@media(max-width:720px){
+    .cols{
+        margin: 20px 0 0 10px;
+        background-color: white;
+        padding-top: 10px;
+        min-width: 90%;
+    }
+
+    .lg-none{
+        display: inline-block;
+    }
+
+    .sm-none{
+        display: none;
+    }
+}
+</style>

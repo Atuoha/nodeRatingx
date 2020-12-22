@@ -53,7 +53,7 @@
         </div>
 
         <div class="reviews" style="margin-top: 10px;">
-            <a class="btn btn-success btn-block" href="/user/company/rating/create/{{company.id}}">Rate Company <i class="fa fa-star" style="color: gold;"></i></a>
+            <a class="btn btn-success btn-block" href="/user/company/rating/create/{{company.id}}">Rate Company <i class="fa fa-star fa-spin" style="color: gold;"></i></a>
 
              <ol class="breadcrumb">
               <li><i class="fa fa-file-o"></i>Reviews ({{ratingCount}})</li>
@@ -62,6 +62,7 @@
 
             <div class="written-reviews">
                 {{!-- Reviews Here --}}
+                <div class="bigger-review-card">
                {{#if ratings}} 
                 {{#each ratings}}
                 <div class="review_card card">
@@ -79,44 +80,44 @@
                             
                             <p>
                                 {{#ifeq rating 1}}
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star"></i>  
-                                 <i class="fa fa-star"></i>  
-                                 <i class="fa fa-star"></i>  
-                                 <i class="fa fa-star"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
                                 {{/ifeq}}  
 
                                  {{#ifeq rating 2}}
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star"></i>  
-                                 <i class="fa fa-star"></i>  
-                                 <i class="fa fa-star"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
                                 {{/ifeq}}  
 
                                  {{#ifeq rating 3}}
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star"></i>  
-                                 <i class="fa fa-star"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
                                 {{/ifeq}}  
 
                                  {{#ifeq rating 4}}
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
                                 {{/ifeq}}  
 
 
                                 {{#ifeq rating 5}}
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star" style="color: gold;"></i>  
-                                 <i class="fa fa-star" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
                                 {{/ifeq}}  
                             </p>
                            </div>
@@ -128,17 +129,17 @@
                                  <p><b>Rating Data</b></p>
                                   <tr>
                                     <th><i class="fa fa-user"></i></th>
-                                    <td>{{user.fullname}} </a></td>
+                                    <td>{{user.fullname}} </td>
                                 </tr> 
 
                                  <tr>
                                     <th><i class="fa fa-briefcase"></i> </th>
-                                    <td> {{user.position}} </a></td>
+                                    <td> {{user.position}} in {{user.company.name}}</td>
                                 </tr> 
 
                                  <tr>
                                     <th><i class="fa fa-pencil"></i></th>
-                                    <td>...{{review}} </a></td>
+                                    <td>...{{review}} </td>
                                 </tr> 
                              </table>
                         </div>
@@ -149,8 +150,9 @@
                 {{/each}}
 
                {{else}}
-                    <div class="alert alert-danger">No Rating Yet! <a style="color: gray;"  href="/user/company/rating/create/{{company.id}}"> Why not give a star <i class="fa fa-star" style="color: gold;"></i></a></div> 
+                    <div class="alert alert-danger">No Rating Yet! <a style="color: gray;"  href="/user/company/rating/create/{{company.id}}"> Why not give a star <i class="fa fa-star fa-spin" style="color: gold;"></i></a></div> 
                {{/if}}
+               </div>
             </div>
         </div>
 
@@ -246,6 +248,12 @@
         border: 1px inset rgb(228, 227, 227);
         background-color: white;
 
+    }
+
+    .bigger-review-card{
+        max-height: 220px;
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
     
     .review_card{

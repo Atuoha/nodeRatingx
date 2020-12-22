@@ -6,13 +6,13 @@
           <div class="text-center" >
             <div style="margin-top: 10px; padding-bottom:10px;"> 
                {{#if loggedUser.file}}
-                    <img alt="" src="/uploads/{{loggedUser.file}}" width="70" class="img-circle img-thumbnail" >
+                    <img alt="" src="/uploads/{{loggedUser.file}}" width="70" class="rounded-circle" >
                   {{else}}
                     <img alt="" src="/uploads/default.png" width="70">
                 {{/if}}           
               </div>
               <span>Welcome,</span>
-              <h4>{{loggedUser.fullname}}</h4>
+              <h5>{{loggedUser.fullname}}</h5>
           </div>
           <li class="active">
             <a class="" href="/user">

@@ -1,7 +1,8 @@
 const express  = require('express'),
     app = express(),
     router = express.Router(),
-    Company = require('../../models/Company');
+    Company = require('../../models/Company'),
+    Rating = require('../../models/Rating');
 
 
   router.all('/*', (req, res, next)=>{
@@ -39,13 +40,80 @@ const express  = require('express'),
 
 
   router.get('/single_company/:id', (req, res)=>{
-      Company.findOne({_id: req.params.id})
-      .then(company=>{
-        res.render('home/single_company', {title: `${company.name}`, company: company})
-      })
-      .catch(err=>console.log(err))
+
+    Company.findOne({_id: req.params.id})
+    .populate('user')
+    .then(company=>{
+        Rating.find({company: req.params.id})
+        .populate('company')
+        .populate('user')
+        .then(ratings=>{
+            let keys =  Object.keys(ratings);
+            let ratingCount = keys.length
+            let averageRating  = company.ratingSum/company.ratingNumber
+            res.render('home/single_company', {title: `${company.name}`, company: company, ratings: ratings, ratingCount: ratingCount, averageRating: parseFloat(averageRating,1) })
+        })
+        .catch(err=>console.log(err))
+    })
+    .catch(err=>console.log(err))
+
   })
 
+
+
+  router.get('/leaderboard', (req, res)=>{
+    Company.find()
+    .sort({'ratingSum': -1})
+    .then(companies=>{
+        res.render('home/leaderboard', {title: 'Leaderboard|nodeRatings', companies: companies})
+    })
+    .catch(err=>console.log(err))
+})
+
+
+router.get('/search', (req, res)=>{
+  res.render('home/search', {title: 'Search|nodeRatings'})
+})
+
+
+router.post('/search', (req, res)=>{
+    let name =  req.body.search
+    let regex = new RegExp(name, 'i')
+
+    Company.find({'$or': [{'name': regex}]})
+    .then(companies=>{
+      if(companies.length > 1){
+        // found more than a company 
+         res.render('home/company', {title: 'Searched|nodeRatings', companies: companies})
+      }else{
+        //  found a single company
+          Company.findOne({'$or': [{'name': regex}]})
+          .populate('user')
+          .then(company=>{
+
+            if(!company){
+              req.flash('error_msg', 'No company with such name')
+              res.redirect('/search')
+            }
+
+
+              Rating.find({company: req.params.id})
+              .populate('company')
+              .populate('user')
+              .then(ratings=>{
+                  let keys =  Object.keys(ratings);
+                  let ratingCount = keys.length
+                  let averageRating  = company.ratingSum/company.ratingNumber
+                  res.render('home/single_company', {title: `${company.name}`, company: company, ratings: ratings, ratingCount: ratingCount, averageRating: parseFloat(averageRating,1) })
+              })
+              .catch(err=>console.log(err))
+          })
+          .catch(err=>console.log(err))
+      }
+     
+    })
+    .catch(err=>console.log(err))
+})
 
 
 module.exports = router;

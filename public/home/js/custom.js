@@ -1,5 +1,5 @@
 
-// $(document).ready( ()=>{
+$(document).ready( ()=>{
     
 //     $('#forgot-form').submit(function(e){
 //         e.preventDefault();
@@ -36,4 +36,29 @@
 //             })
 //         })
 //     })
-// })
+
+
+
+    $('#msg_form').submit(function(e){
+        e.preventDefault()
+        let data = $(this).serialize();
+        let action = $(this).attr('action');
+        let msg = $('#msg').val()
+
+        if(msg != ''){
+            $.ajax({
+                url: action,
+                data: data,
+                type: 'POST',
+                cache: false,
+                success: (data=>{
+                    $('#msg_form').reset()
+                    console.log('sent')
+                })
+            })
+        }else{
+            console.log('msg input is empty!!!')
+        }
+
+    })
+})

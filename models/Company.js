@@ -40,6 +40,8 @@ const companySchema = new Schema({
        ref: 'users'
     }],
 
+    ratingPoints:[Number],
+
     ratingNumber: {type: Number, default: 0},
     ratingSum:{type: Number, default: 0},
 

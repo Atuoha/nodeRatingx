@@ -26,6 +26,13 @@ router.get('/', (req, res)=>{
 
 
 router.get('/create/:id', (req, res)=>{
+
+    if(!req.user){
+        req.flash('error_msg', 'Sign in to rate company')
+        res.redirect('back')
+    }
+
+    
     // Company.find({user: req.user})'
     Company.findOne({_id: req.params.id})
     .then(company=>{
@@ -36,6 +43,8 @@ router.get('/create/:id', (req, res)=>{
 
 
 router.post('/create/:id', (req, res)=>{
+
+  
     
     const newRating = new Rating()
     newRating.rating = req.body.rating
@@ -48,7 +57,7 @@ router.post('/create/:id', (req, res)=>{
         .then(company=>{
             company.ratingSum += parseInt(req.body.rating)
             company.ratingNumber += 1
-            // company.ratingPoints.push(req.body.rating)
+            company.ratingPoints.push(req.body.rating)
 
             company.save()
             .then(response=>{

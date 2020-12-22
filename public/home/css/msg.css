@@ -1,0 +1,67 @@
+
+body{
+    height: 100%
+}
+.chat-container{
+    min-height: 76vh;
+    max-height: 76vh;
+}
+
+.jumbotron{
+    max-height: 20vh;
+}
+
+.chat{
+    min-height: 50vh;
+    max-height: 50vh;
+    overflow-y: scroll;
+}
+
+.app-footer {
+	flex-shrink: 0;
+	background: #f4f4f4;
+	color: #444;
+	padding: 10px;
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+
+.chat-wrapper{
+    padding:2px;
+  }
+  .chat-wrapper .chat-message {
+    position: relative;
+    float: left;
+    clear: both;
+    margin: 2px 50px 20px;
+    border-radius: 8px;
+    line-height: 22px;
+  }
+  
+  .chat-wrapper .chat-message {
+    position: relative;
+    float: left;
+    clear: both;
+    margin: 2px 50px 20px;
+    padding: 8px;
+    border-radius: 8px;
+    line-height: 22px;
+    background-color: #ddd;
+  
+  }
+  
+  
+  .chat-wrapper .chat-message .rounded-circle {
+    position: absolute;
+    top: -2px;
+    left: -50px;
+    height: 42px;
+    width: 42px;
+  }
+  
+  .chat-wrapper .chat-message.right .rounded-circle {
+    left: auto;
+    right: -50px;
+  }
+

@@ -31,16 +31,58 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-4 col-l4">
                              <img src="/uploads/{{file}}" class="img-thumbnail" alt="" width="200"> <br><br> 
-                             <p style="color:gold">
-                                 <i class="fa fa-star  fa-spin"></i>
-                                 <i class="fa fa-star  fa-spin"></i>
-                                 <i class="fa fa-star  fa-spin"></i>
-                                 <i class="fa fa-star  fa-spin"></i>
-                                 <i class="fa fa-star  fa-spin"></i>
+                             <p>
+                                {{#if ratingNumber}} 
+                                   {{#ifeq ratingNumber 1}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                {{/ifeq}}  
 
+                                 {{#ifeq ratingNumber 2}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                {{/ifeq}}  
+
+                                 {{#ifeq ratingNumber 3}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                {{/ifeq}}  
+
+                                 {{#ifeq ratingNumber 4}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                {{/ifeq}}  
+
+
+                                {{#ifeq ratingNumber 5}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                {{/ifeq}}  
+                              {{else}}
+                                 <i class="fa fa-star fa-spin" ></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin" ></i>  
+                                 <i class="fa fa-star fa-spin" ></i>  
+                                 <i class="fa fa-star fa-spin" ></i>  
+                              {{/if}}  
                                  
                             </p>
-                             <a class="btn btn-success sm-none" href="/user/company/rating/{{id}}">Rate <i class="fa fa-star"></i></a><br>
+                             <a class="btn btn-success sm-none" href="/user/company/rating/create/{{id}}">Rate <i class="fa fa-star"></i></a><br>
                              <a class="btn btn-warning sm-none" href="/single_company/{{id}}">View <i class="fa fa-eye"></i></a>
 
 
@@ -65,7 +107,7 @@
                                 </tr>
                             </table>
 
-                             <a class="btn btn-success lg-none" href="/user/company/rating/{{id}}">Rate <i class="fa fa-star"></i></a>
+                             <a class="btn btn-success lg-none" href="/user/company/rating/create/{{id}}">Rate <i class="fa fa-star"></i></a>
                              <a class="btn btn-warning lg-none" href="/single_company/{{id}}">View <i class="fa fa-eye"></i></a>
                         </div>
                     </div>

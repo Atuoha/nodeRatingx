@@ -1,0 +1,54 @@
+
+<div class="container">
+          <div class="chat-container"> 
+                <div class="jumbotron bg-secondary  text-center text-white">
+                     <h1><strong>Messaging <i class="fa fa-comment-o" style="color:gold"></i></strong></h1>
+                     <p style="color:gold; font-size: 70%">  | Messages with {{user.fullname}} |</p><br>
+                </div>
+                        <p class="error"></p>
+                    
+                        <div class="chat">
+                            <div class="chat-wrapper">
+                                
+                                 <div class="chat-message right" style="float:right;background-color:#1e88e5;color:white;">
+                                    <img class="rounded-circle" width="30" src="/uploads/{{loggedUser.file}}"alt="img">    
+                                    <b>You:</b> <span class="msg">Hi</span> <br> 
+                                    <span class="text-small" style="float:right"><sub>2 mins ago</sub></span>
+                                </div> 
+
+
+                               <div class="chat-message" style="background-color:white">
+                                   {{#if user.file}}
+                                        <img class="rounded-circle" width="30" src="/uploads/{{user.file}}"alt="img">    
+                                    {{else}}
+                                        <img class="rounded-circle" width="30" src="/uploads/default.png"alt="img">    
+                                    {{/if}}
+
+                                    <b>{{user.fullname}}:</b> <span class="white-text">Hey</span><br>
+                                    <span class="text-small" style="float:right"><sub>1 mins ago</sub></span>
+                                </div> 
+
+                                
+
+
+                            </div>
+                        </div>
+            </div> 
+            
+             <footer class="app-footer">
+                <form action="/messaging/create" id="msg_form" method="post">
+                    <div class="input-group">
+                        <input type="hidden" name="receiver" value="{{user.id}}">
+                        <input type="hidden" name="sender" value="{{loggedUser.id}}">
+
+                        <input type="text" id="msg" name="msg" class="form-control" placeholder="Start typing..." autofocus=""  >
+                        <div class="input-append">                            
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-send"></i></button>
+                        </div>
+                    </div> 
+                 </form>   
+            </footer>
+
+
+       </div>
+    </div>
