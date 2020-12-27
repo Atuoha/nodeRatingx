@@ -110,8 +110,8 @@ router.get('/show/:id', (req, res)=>{
     .populate('user')
     .then(company=>{
         Rating.find({company: req.params.id})
-        .populate('company')
         .populate('user')
+        .populate('company')
         .then(ratings=>{
             let keys =  Object.keys(ratings);
             let ratingCount = keys.length
@@ -151,9 +151,9 @@ router.get('/search', (req, res)=>{
                 req.flash('error_msg', 'No company with such name')
                 res.redirect('/search')
               }
-  
-  
-                Rating.find({company: req.params.id})
+
+                // Obtaining the ratings 
+                Rating.find({company: company._id})
                 .populate('company')
                 .populate('user')
                 .then(ratings=>{

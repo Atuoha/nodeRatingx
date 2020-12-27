@@ -10,42 +10,29 @@ const express = require('express'),
 
 
 router.all('/*', (req, res, next)=>{
-    req.app.locals.layout = 'user';
+    req.app.locals.layout = 'admin';
     next()
 })    
 
 
 
 router.get('/', (req, res)=>{
-    Company.findOne({user: req.user})
-    .then(company=>{
-        User.find({company: company.id})
+        User.find()
+        .populate('company')
         .then(users=>{
-            res.render('accounts/user/employees', {title: 'Employees|User', users: users})
+            res.render('accounts/admin/users', {title: 'Admin|Users', users: users})
         })
         .catch(err=>console.log(err))
-    })
-    .catch(err=>console.log(err))
-   
-    
+       
 })
 
-
-
-router.get('/:id', (req, res)=>{
-    User.find({company: req.params.id})
-    .then(users=>{
-        res.render('accounts/user/employees', {title: 'Employees|User', users: users})
-    })
-    .catch(err=>console.log(err))
-})
 
 
 router.get('/edit/:id', (req, res)=>{
     User.findOne({_id: req.params.id})
     .populate('company')
     .then(employee=>{
-        res.render('accounts/user/employees/edit', {title: 'Edit|Employee', employee: employee})
+        res.render('accounts/admin/users/edit', {title: 'Edit|Employee', employee: employee})
     })
     .catch(err=>console.log(err))
 })
@@ -55,7 +42,7 @@ router.get('/show/:id', (req, res)=>{
     User.findOne({_id: req.params.id})
     .populate('company')
     .then(employee=>{
-        res.render('accounts/user/employees/show', {title: employee.fullname, employee: employee})
+        res.render('accounts/admin/users/show', {title: employee.fullname, employee: employee})
     })
     .catch(err=>console.log(err))
 })
@@ -64,7 +51,7 @@ router.get('/show/:id', (req, res)=>{
 router.get('/create/:id', (req, res)=>{
     Company.findOne({_id: req.params.id})
     .then(company=>{
-        res.render('accounts/user/employees/create', {title: 'Create|Employee', company: company})
+        res.render('accounts/admin/users/create', {title: 'Create|Employee', company: company})
   
     })
     .catch(err=>console.log(err))
@@ -75,7 +62,7 @@ router.get('/create/:id', (req, res)=>{
 router.get('/create', (req, res)=>{
         Company.find()
         .then(companies=>{
-            res.render('accounts/user/employees/create', {title: 'Create|Employee', companies:companies})
+            res.render('accounts/admin/users/create', {title: 'Create|Employee', companies:companies})
         })
         .catch(err=>console.log(err))    
 })
@@ -86,7 +73,7 @@ router.post('/create', (req, res)=>{
     .then(user=>{
         if(user){
             req.flash('error_msg', 'Email already exists. Try again!')
-            res.redirect('/user/employee/create')
+            res.redirect('/admin/users/create')
         }else{
             let filename = ''
             if(!isEmpty(req.files)){
@@ -144,7 +131,7 @@ router.post('/create', (req, res)=>{
 
 
                         req.flash('success_msg', 'Employee record saved successfully :)')
-                        res.redirect('/user/employee')
+                        res.redirect('/admin/users')
                     })
                     .catch(err=>console.log(err))
                 })
@@ -200,7 +187,7 @@ router.put('/update/:id', (req, res)=>{
                     employee.save()
                     .then(response=>{
                         req.flash('success_msg', `${response.fullname} has been updated successfully`)
-                        res.redirect('/user/employee');
+                        res.redirect('/admin/users');
                     })
                     .catch(err=>console.log(err))
                 })
@@ -215,7 +202,7 @@ router.put('/update/:id', (req, res)=>{
             employee.save()
             .then(response=>{
                 req.flash('success_msg', `${response.fullname} has been updated successfully`)
-                res.redirect('/user/employee');
+                res.redirect('/admin/users');
             })
             .catch(err=>console.log(err))
         }
@@ -238,7 +225,7 @@ router.delete('/delete/:id', (req, res)=>{
         employee.delete()
         .then(response=>{
             req.flash('success_msg', `${response.fullname} has been deleted successfully`)
-            res.redirect('/user/employee');
+            res.redirect('/admin/users');
         })
         .catch(err=>console.log(err))
     })

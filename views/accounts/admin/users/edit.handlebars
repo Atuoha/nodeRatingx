@@ -1,85 +1,85 @@
 
-<form action="/admin/users/update/{{user.id}}" method="post" enctype="multipart/form-data">
+<form action="/admin/users/update/{{employee.id}}?_method=PUT" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-4">
             <label for="" class="control-label">Fullname</label>
-            <input type="text" class="form-control" value="{{user.name}}"  name="name" required autofocus> 
+            <input type="text" class="form-control" value="{{employee.fullname}}" name="fullname" required autofocus> 
         </div>
 
          <div class="col-md-4">
             <label for="" class="control-label">Email</label>
-            <input type="text" class="form-control" value="{{user.email}}" name="email" required > 
+            <input type="text" class="form-control" value="{{employee.email}}" name="email" required > 
         </div>
 
          <div class="col-md-4">
-            <label for="" class="control-label">Phone</label>
-            <input type="text" class="form-control" value="{{user.phone}}" name="phone" required > 
+           <label for="" class="control-label">Position</label>
+           {{#select employee.postion}}
+            <select name="position" class="form-control" id="" required>
+                <option value="Accountant">Accountant</option>
+                <option value="Web Developer">Web Developer</option>
+                <option value="Secretary">Secretary</option>
+                <option value="Security">Security</option>
+                <option value="HRM Personnel">HRM Personnel</option>
+                <option value="Supervisor">Supervisor</option>
+            </select>
+           {{/select}} 
         </div>
 
     </div>
-
-
+    
      <div class="row">
         <div class="col-md-4">
             <label for="" class="control-label">Role</label>
-            {{#ifeq loggedUser.role 'Admin'}}
-            <select name="role" class="form-control" id="" required>
-                {{#select user.role}}
+            {{#select employee.role}}
+                <select name="role" class="form-control" id="" required>
                     <option value="Subscriber">Subscriber</option>
-                    <option value="Admin">Admin</option>
-                {{/select}}
-            </select>
-           {{/ifeq}}
-
-           {{#ifeq loggedUser.role 'Subscriber'}} 
-                <input type="text" class="form-control" name="role" value="{{user.role}}" readonly id="">
-           {{/ifeq}}
+                    <option value="Manager">Manager</option>
+                </select>
+            {{/select}}
         </div>
 
          <div class="col-md-4">
             <label for="" class="control-label">Status</label>
-             {{#ifeq loggedUser.role 'Admin'}}
-            <select name="status" class="form-control" id="" required>
-                {{#select user.status}}
+            {{#select employee.status}}
+                <select name="status" class="form-control" id="" required>
                     <option value="Active">Active</option>
                     <option value="Unactive">Unactive</option>
-                {{/select}}
-            </select>
-           {{/ifeq}}
-
-           {{#ifeq loggedUser.role 'Subscriber'}} 
-                <input type="text" class="form-control" name="status" value="{{user.status}}" readonly id="">
-           {{/ifeq}}
+                </select>
+            {{/select}}
         </div>
 
          <div class="col-md-4">
-            <label for="" class="control-label">Imagery</label>
-            <input type="file" name="file" id="inpFile" class="form-control">
+              <div class="image-preview pull-right" id="imagePreview">
+                <img width="100" class="img-thumbnail image-preview__image" src="/uploads/{{employee.file}}" alt=""> 
+                <span class="image-preview__default-text"> </span>
+            </div>
+           <label for="" class="control-label">Upload Image</label>
+            <input type="file" accept="image/*" name="file" id="inpFile" class="form-control" style="display: none;"><br>
+            <button type="button" id="upload-btn" class="btn btn-primary">Upload <i class="fa fa-file"></i></button> 
         </div>
+
+       
     </div>
 
-      <div class="row">
-            <div class="col-md-6">
-                <label for="" class="control-label">Password</label>
-                <input type="password" name="password" class="form-control" id="">
-            </div>
-            
+    <div class="row">
 
-            <div class="col-md-6">
-                <div class="image-preview pull-right" id="imagePreview">
-                {{#if user.file}} 
-                        <img width="100" class="img-thumbnail image-preview__image" src="/uploads/{{user.file}}" alt=""> 
-                    {{else}}
-                        <img width="100" class="img-thumbnail image-preview__image" src="/uploads/default.png" alt=""> 
-                {{/if}} 
-                    <span class="image-preview__default-text"> </span>
-                </div>
-            </div>
+        <div class="col-md-4">
+            <label for="" class="control-label">Password</label>
+            <input type="password" name="password" class="form-control" id="">
+        </div>
+      
+        <div class="col-md-4">
+                <label for="" class="control-label">Company</label>
+                <input type="text" readonly value="Company: {{employee.company.name}}" class="form-control">
+        </div>
 
-         </div>
+
+       
+
+    </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-success">Submit  Edit</button>
+        <button type="submit" class="btn btn-success">Update Employee</button>
     </div>
 </form>
 
@@ -87,8 +87,8 @@
 
 
 
-
 <!-- SCRIPTING FOR PREVIEWING IMAGE BEFORE UPLOADING  -->
+<script src="/admin/js/jquery.js"></script>
 <script>
 
     const inpFile = document.getElementById('inpFile');
@@ -114,5 +114,10 @@
             previewImage.style.display = 'none';
             previewImage.setAttribute('src',"");
         }
+    })
+
+    // triggering input file with a button
+    $('#upload-btn').click(function(){
+        $('#inpFile').click()
     })
 </script>

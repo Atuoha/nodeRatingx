@@ -1,5 +1,5 @@
 
-<form action="/admin/Company/create" method="post" enctype="multipart/form-data">
+<form action="/user/company/create" method="post" enctype="multipart/form-data">
 
     <div class="row">
         <div class="col-md-4">
@@ -53,8 +53,9 @@
 </div>
 
     <div class="form-group">
-            <label for="" class="control-label">Imagery</label>
-            <input type="file" name="file" id="inpFile" class="form-control">
+            <label for="" class="control-label">Upload Image</label>
+            <input type="file" accept="image/*" name="file" id="inpFile" class="form-control" style="display: none;"><br>
+            <button type="button" id="upload-btn" class="btn btn-primary">Upload <i class="fa fa-file"></i></button>
     </div>
 
         <div class="image-preview pull-right" id="imagePreview">
@@ -75,6 +76,7 @@
 
 
 <!-- SCRIPTING FOR PREVIEWING IMAGE BEFORE UPLOADING  -->
+<script src="/admin/js/jquery.js"></script>
 <script>
 
     const inpFile = document.getElementById('inpFile');
@@ -100,5 +102,10 @@
             previewImage.style.display = 'none';
             previewImage.setAttribute('src',"");
         }
+    })
+
+    // triggering input file with a button
+    $('#upload-btn').click(function(){
+        $('#inpFile').click()
     })
 </script>

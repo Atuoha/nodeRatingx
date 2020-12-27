@@ -14,6 +14,7 @@ const express = require('express'),
     Handlebars = require('handlebars'),
     port  = process.env.PORT || 1777,
     path = require('path'),
+    moment = require('moment'),
     passport = require('passport'),
     {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access'),
     methodOverride = require('method-override'),
@@ -94,9 +95,10 @@ app.use( (req, res, next)=>{
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error = req.flash('error');
     res.locals.loggedUser = req.user || null
-
     next();
 })
+
+app.locals.moment = moment;
 
 
 
@@ -122,6 +124,30 @@ const admin = require('./routes/account/admin/index')
 app.use('/admin', admin);
 
 
+// COMPANY
+const admin_company = require('./routes/account/admin/company')
+app.use('/admin/company', admin_company);
+
+
+// PROFILE
+const admin_profile = require('./routes/account/admin/profile')
+app.use('/admin/profile', admin_profile);
+
+
+// USERS
+const admin_users = require('./routes/account/admin/users')
+app.use('/admin/users', admin_users);
+
+
+
+// RATING/REVIEW
+const admin_rating = require('./routes/account/admin/rating')
+app.use('/admin/company/rating', admin_rating);
+
+
+// MESSAGING
+const admin_messaging = require('./routes/account/admin/messaging')
+app.use('/admin/messaging', admin_messaging);
 
 
 
@@ -162,9 +188,7 @@ const rating = require('./routes/account/user/rating')
 app.use('/user/company/rating', rating);
 
 
-
-
-// RATING/REVIEW
+// MESSAGING
 const messaging = require('./routes/account/user/messaging')
 app.use('/user/messaging', messaging);
 

@@ -96,8 +96,8 @@ router.post('/search', (req, res)=>{
               res.redirect('/search')
             }
 
-
-              Rating.find({company: req.params.id})
+                // Obtaining the ratings 
+              Rating.find({company: company._id})
               .populate('company')
               .populate('user')
               .then(ratings=>{

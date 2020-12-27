@@ -52,7 +52,10 @@ $(document).ready( ()=>{
                 type: 'POST',
                 cache: false,
                 success: (data=>{
-                    $('#msg_form').reset()
+                    $('#msg').val('')
+                    setInterval( ()=>{
+                        $('.chat-wrapper').load(location.href + ' .chat-wrapper' )
+                    }, 200)
                     console.log('sent')
                 })
             })
@@ -61,4 +64,10 @@ $(document).ready( ()=>{
         }
 
     })
+    
+
+
+    setInterval( ()=>{
+        $('.chat-wrapper').load(location.href + ' .chat-wrapper' )
+    }, 200)
 })

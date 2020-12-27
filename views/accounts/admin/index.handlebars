@@ -1,45 +1,106 @@
 <div class="container">
-    <div class="text-center">
-        <h1>Hello, {{loggedUser.fullname}}</h1>
-        <p>What do you want to do today?</p>
-    </div>
-
     <div class="row">
-
-        <div class="col-md-4" id="colDesc">
-            <div class="card text-center white">
-                <i class="fa fa-group fa-4x"></i>
-                <h3>ADD COMPANY</h3>
-                <p>Add company profile. Employees can give company ratings and reviews</p>
-
-                <a href="" class="btn btn-primary">Add Company</a>
+       
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="info-box blue-bg">
+              <i class="icofont-users"></i>
+              <div class="count text-center">{{usersCount}}</div>
+              <div class="title text-center">Users</div>
             </div>
-        </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
 
 
-        <div class="col-md-4" id="colDesc">
-            <div class="card text-center white">
-                <i class="fa fa-search fa-4x"></i>
-                <h3>SEARCH</h3>
-                <p>Search through our company catalogue. Find your best partner to start with</p>
-
-                <a href="" class="btn btn-primary">Search Company</a>
+           <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="info-box dark-bg">
+              <i class="icofont-building"></i>
+              <div class="count text-center">{{companyCount}}</div>
+              <div class="title text-center">Companies</div>
             </div>
-        </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
 
 
 
-        <div class="col-md-4" id="colDesc">
-            <div class="card text-center white">
-                <i class="fa fa-star fa-4x"></i>
-                <h3>RATE COMPANY</h3>
-                <p>Rate and review other companies and get your company reviewed as well.</p>
-
-                <a href="" class="btn btn-primary">Rate Company</a>
+           <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="info-box red-bg">
+              <i class="icofont-star"></i>
+              <div class="count text-center">{{ratingCount}}</div>
+              <div class="title text-center">Ratings</div>
             </div>
-        </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
 
 
+
+           <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="info-box green-bg">
+              <i class="icofont-user"></i>
+              <div class="count text-center">{{managerCount}}</div>
+              <div class="title text-center">Managers</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
     </div>
+
+
+     <section class="panel">
+    <header class="panel-heading no-border">
+        Diagramatic Represenation of Data
+    </header>     
+        <canvas id="myChart" ></canvas>                
+    </section>
 
 </div>
+
+
+
+
+
+
+<!-- External Script for Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script> 
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Users", "Companies", "Ratings", "Managers"],
+        datasets: [{
+            label: 'Data From nodeRatings',
+            data: [ {{usersCount}},  {{companyCount}},  {{ratingCount}}, {{managerCount}}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+</script>

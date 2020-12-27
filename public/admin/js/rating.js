@@ -48,7 +48,7 @@ $(document).ready(function(e){
                           });
 
                           setInterval( ()=>{
-                             window.location.replace(`/user/company/show/${company_id}`)
+                             window.location.replace(`/admin/company/show/${company_id}`)
                           }, 7000)
                     }
                 })

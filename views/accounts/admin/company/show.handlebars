@@ -1,43 +1,265 @@
-<div class="alert alert-success">
-    Viewing Department:  - {{dept.name}}
+
+<div class="jumbotron bg-secondary text-white text-center">
+            <img src="/uploads/{{company.file}}" width="150" class=" img-thumbnail" alt="">
+            <h1 ><strong>{{company.name}} </strong></h1>
+        <p style="color:grey; font-size: 70%">Sector: {{company.sector}}</p>
+</div>       
+<div class="container">
+<div class="m-5 mx-auto">
+<div class="row">
+    <div class="col-md-7">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card rating_sec text-center">
+                    {{#if company.ratingNumber}}
+                        <h1 style="color: rgb(15, 201, 15);"><b>{{company.ratingNumber}}</b></h1>
+                    {{else}}
+                         <h1 style="color: rgb(15, 201, 15);"><b>0</b></h1>
+                    {{/if}}
+                    <h4>Ratings</h4>
+
+                    <p>Total ratings received</p>
+                </div>
+            </div>
+
+
+             <div class="col-md-4">
+                <div class="card rating_sec text-center">
+                    {{#if company.ratingSum}}
+                         <h1 style="color: gold;"><b>{{company.ratingSum}}</b></h1>
+                    {{else}}
+                         <h1 style="color: gold;"><b>0</b></h1>
+                    {{/if}}
+                    <h4>Total Stars</h4>
+
+                    <p>Total stars received</p>
+                </div>
+            </div>
+
+
+
+             <div class="col-md-4">
+                <div class="card rating_sec text-center">
+                    {{#if company.ratingSum}}
+                         <h1 style="color: rgb(15, 201, 15)"><b>{{averageRating}}</b></h1>
+                    {{else}}
+                         <h1 style="color: rgb(15, 201, 15)"><b>0.0</b></h1>
+                    {{/if}}
+                    <h4>Average Rating</h4>
+
+                    <p>Based on five reviews</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="reviews" style="margin-top: 10px;">
+            <a class="btn btn-success btn-block" href="/admin/company/rating/create/{{company.id}}">Rate Company <i class="fa fa-star fa-spin" style="color: gold;"></i></a>
+
+             <ol class="breadcrumb">
+              <li><i class="fa fa-file-o"></i>Reviews ({{ratingCount}})</li>
+              <li><a href="/user/company/rating/create/{{company.id}}" style="color:grey">Write Review <i class="fa fa-pencil"></i></a></li>
+            </ol>
+
+            <div class="written-reviews">
+                {{!-- Reviews Here --}}
+                <div class="bigger-review-card">
+               {{#if ratings}} 
+                {{#each ratings}}
+                <div class="review_card card">
+                    <div class="row">
+                       <div class="text-center">
+
+                      
+                        <div class="col-md-4">
+                           {{#if user.file}}
+                                <img alt="" src="/uploads/{{user.file}}" width="80" class="img-circle img-thumbnail" >
+                            {{else}}
+                                <img alt="" src="/uploads/default.png" width="80">
+                            {{/if}}  
+
+                            
+                            <p>
+                                {{#ifeq rating 1}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                {{/ifeq}}  
+
+                                 {{#ifeq rating 2}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                {{/ifeq}}  
+
+                                 {{#ifeq rating 3}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                {{/ifeq}}  
+
+                                 {{#ifeq rating 4}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                {{/ifeq}}  
+
+
+                                {{#ifeq rating 5}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                {{/ifeq}}  
+                            </p>
+                           </div>
+                        </div>
+
+
+                         <div class="col-md-8">
+                             <table>
+                                 <p><b>Rating Data</b></p>
+                                  <tr>
+                                    <th><i class="fa fa-user"></i></th>
+                                    <td>{{user.fullname}} </td>
+                                </tr> 
+
+                                 <tr>
+                                    <th><i class="fa fa-briefcase"></i> </th>
+                                    <td> {{user.position}} in {{user.company.name}}</td>
+                                </tr> 
+
+                                 <tr>
+                                    <th><i class="fa fa-pencil"></i></th>
+                                    <td>...{{review}} </td>
+                                </tr> 
+                             </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                {{/each}}
+
+               {{else}}
+                    <div class="alert alert-danger">No Rating Yet! <a style="color: gray;"  href="/admin/company/rating/create/{{company.id}}"> Why not give a star <i class="fa fa-star fa-spin" style="color: gold;"></i></a></div> 
+               {{/if}}
+               </div>
+            </div>
+        </div>
+
+            
+            
+
+    </div>
+
+    <div class="col-md-5 mt-2">
+        <table class="table table-striped table-responsive">
+            <tr>
+                <th>Name</th>
+                <td>{{company.name}}</td>
+            </tr>
+
+            <tr>
+                <th><i class="fa fa-map-marker"></i></th>
+                <td>{{company.address}}, {{company.city}}, {{company.country}}.</td>
+            </tr>
+
+
+            <tr>
+                <th><i class="fa fa-building-o"></i></th>
+                <td>{{company.sector}}</td>
+            </tr>
+
+            <tr>
+                <th><i class="fa fa-external-link"></i></th>
+                <td><a style="color:grey" href="{{company.website}}" target="_blank">{{company.website}}</a></td>
+            </tr>
+
+
+             <tr>
+                <th><i class="fa fa-group"></i> Managers</th>
+                    <td>
+                    {{#each company.user}}
+                         <i class="fa fa-user"></i> {{fullname}} | 
+                    {{/each}}
+                    </td>
+
+                
+            </tr>
+
+             <tr>
+                <th><i class="fa fa-group"></i></th>
+                <td><a class="btn btn-default" href="/user/employee">View Employees <i class="fa fa-group"></i></a></td>
+            </tr>
+            
+             <tr>
+                <th><i class="fa fa-user-plus"></i></th>
+                <td><a class="btn btn-default" href="/user/employee/create/{{company.id}}">Add Employee <i class="fa fa-user-plus"></i></a></td>
+            </tr>
+
+
+            <tr>
+            <th><i class="fa fa-pencil"></i></th>
+            <td><a href="/user/company/edit/{{company.id}}" class="btn btn-warning">Edit Company <i class="fa fa-pencil"></i></a></td>
+            </tr>
+        
+            <tr>
+            <th><i class="fa fa-remove"></i></th>
+            <td>
+                <form action="/user/company/delete/{{company.id}}?_method=DELETE" method="post">
+                    <button type="submit" class="btn btn-danger">Delete Company <i class="fa fa-remove"></i></button>
+
+                </form>
+            </td>
+            </tr> 
+
+          
+
+        </table>
+    </div>
 </div>
-
-
-<div class="card pull-right">
-   <img src="/uploads/{{dept.file}}" width="200" class="thumbnail">
 </div>
-
-<table class="table table-striped bordered">
-    
-    <tr>
-    <th>Name</th>
-    <td>{{dept.name}}</td>
-    </tr>
-    
-    <tr>
-    <th>Tag</th>
-    <td>{{dept.tag}}</td>
-    </tr>
-
-    <tr>
-    <th>Intro</th>
-    <td>{{dept.intro}}</td>
-    </tr>
-    
-    <tr>
-    <th>Content</th>
-    <td>{{dept.content}}</td>
-    </tr>
-    
-    <tr>
-    <th>Edit</th>
-    <td><a href="/admin/department/edit/{{dept.id}}" class="btn btn-success"><i class="fa fa-pencil"></i> Edit</a></td>
-    </tr>
    
-    <tr>
-    <th>Delete</th>
-    <td><a href="/admin/department/delete/{{dept.id}}" class="btn btn-danger"><i class="fa fa-remove"></i> Delete</td>
-    </tr>
-    
 
-</table>
+</div>
+
+
+
+
+<style>
+    .rating_sec{
+        min-height: 100px;
+        border: 1px inset rgb(228, 227, 227);
+        background-color: white;
+
+    }
+
+    .bigger-review-card{
+        max-height: 220px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    
+    .review_card{
+        min-height: 50px;
+        border: 1px solid white;
+        background-color: white;
+        padding: 2px;
+        border-radius: 2px;
+    }
+
+    .table{
+        margin-top: 0px;
+    }
+    
+</style>
+

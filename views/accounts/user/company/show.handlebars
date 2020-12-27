@@ -221,13 +221,19 @@
 
                 </form>
             </td>
-            </tr>
+            </tr> 
             {{/ifeq}}
 
             {{#ifeq loggedUser.role 'Subscriber'}}
             <tr>
                 <th><i class="fa fa-user-plus"></i></th>
-                <td><a class="btn btn-default" href="/user/profile/edit/{{loggedUser._id}}/company/{{company.id}}">Add company to profile<i class="fa fa-user-plus"></i></a></td>
+                <td><a class="btn btn-default" href="/user/profile/edit/{{loggedUser._id}}/company/{{company.id}}">Add company to profile <i class="fa fa-user-plus"></i></a></td>
+            </tr>
+
+
+             <tr>
+                <th><i class="fa fa-group"></i></th>
+                <td><a class="btn btn-default" href="/user/employee/{{company.id}}">Employees <i class="fa fa-group"></i></a></td>
             </tr>
             {{/ifeq}}
 

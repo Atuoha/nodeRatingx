@@ -1,0 +1,53 @@
+
+<div class="container">
+  <div class="jumbotron bg-secondary text-white text-center">
+            <h1 ><strong>Companies <i class="fa fa-search" style="color:gold"></i></strong></h1>
+        <p style="color:grey; font-size: 70%">  | Search for companies |</p><br>
+
+      
+    </div>
+
+<div class="container">
+    <form action="admin/company/search" id="search" method="post">
+        <div class="form-group">                                              
+				<input required="" autofocus="" class="form-control"  placeholder="Search company" type="text" name="search">                        
+				<div class="input-group-prepend">
+					<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+				</div>											
+			</div>
+    </form> 
+</div>
+
+
+
+
+
+
+
+
+
+<script src="/admin/js/jquery.js"></script>
+<script>
+   /* $('#search').submit(function(e){
+        e.preventDefault()
+
+        let search = e.target.value
+        let action = $(this).attr('action')
+        console.log(e.target.value)
+
+        $.ajax({
+            url: action,
+            type: 'POST',
+            data: {search: search},
+            cache: false,
+            success: (data=>{
+                if(!data.error){
+                    console.log(data)
+                }
+            })
+
+        })
+    })
+
+    */
+</script>

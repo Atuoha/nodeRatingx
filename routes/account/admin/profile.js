@@ -8,15 +8,16 @@ const express = require('express'),
 
     
 router.all('/*', (req, res, next)=>{
-    req.app.locals.layout = 'user'
+    req.app.locals.layout = 'admin'
     next()
 })
 
 
 router.get('/', (req, res)=>{
     User.findOne({_id: req.user.id})
+    .populate('company')
     .then(profile=>{
-        res.render('accounts/user/profile', {title: 'Profile|User', profile: profile})
+        res.render('accounts/admin/profile', {title: 'Profile|User', profile: profile})
     })
     .catch(err=>console.log(err))
 })
@@ -25,7 +26,7 @@ router.get('/', (req, res)=>{
 router.get('/edit/:id', (req, res)=>{
     User.findOne({_id: req.params.id})
     .then(profile=>{
-        res.render('accounts/user/profile/edit', {title: 'Edit|Profile', profile: profile})
+        res.render('accounts/admin/profile/edit', {title: 'Edit|Profile', profile: profile})
     })
     .catch(err=>console.log(err))
 })
@@ -62,7 +63,7 @@ router.put('/:id/update', (req, res)=>{
                     profile.password = hash
                     .then(response=>{
                         req.flash('success_msg', 'Profile updated :)')
-                        res.redirect('/user/profile')
+                        res.redirect('/admin/profile')
                     })
                     .catch(err=>console.log(err))
                 })
@@ -74,7 +75,7 @@ router.put('/:id/update', (req, res)=>{
             profile.save()
             .then(response=>{
                 req.flash('success_msg', 'Profile updated :)')
-                res.redirect('/user/profile')
+                res.redirect('/admin/profile')
             })
             .catch(err=>console.log(err))
         }

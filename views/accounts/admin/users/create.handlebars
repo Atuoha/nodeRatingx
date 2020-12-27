@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-4">
             <label for="" class="control-label">Fullname</label>
-            <input type="text" class="form-control" name="name" required autofocus> 
+            <input type="text" class="form-control" name="fullname" required autofocus> 
         </div>
 
          <div class="col-md-4">
@@ -12,20 +12,25 @@
         </div>
 
          <div class="col-md-4">
-            <label for="" class="control-label">Phone</label>
-            <input type="text" class="form-control" name="phone" required > 
+           <label for="" class="control-label">Position</label>
+            <select name="position" class="form-control" id="" required>
+                <option value="Accountant">Accountant</option>
+                <option value="Web Developer">Web Developer</option>
+                <option value="Secretary">Secretary</option>
+                <option value="Security">Security</option>
+                <option value="HRM Personnel">HRM Personnel</option>
+                <option value="Supervisor">Supervisor</option>
+            </select>
         </div>
 
     </div>
-
-
+    
      <div class="row">
         <div class="col-md-4">
             <label for="" class="control-label">Role</label>
             <select name="role" class="form-control" id="" required>
                 <option value="Subscriber">Subscriber</option>
-                <option value="Admin">Admin</option>
-
+                <option value="Manager">Manager</option>
             </select>
         </div>
 
@@ -39,29 +44,48 @@
         </div>
 
          <div class="col-md-4">
-            <label for="" class="control-label">Imagery</label>
-            <input type="file" name="file" id="inpFile" required class="form-control">
+              <div class="image-preview pull-right" id="imagePreview">
+                <img width="100" class="img-circle image-preview__image" src="/uploads/default.png" alt=""> 
+                <span class="image-preview__default-text"> </span>
+            </div>
+           <label for="" class="control-label">Upload Image</label>
+            <input type="file" accept="image/*" name="file" id="inpFile" class="form-control" style="display: none;"><br>
+            <button type="button" id="upload-btn" class="btn btn-primary">Upload <i class="fa fa-file"></i></button> 
         </div>
+
+       
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+
+        <div class="col-md-4">
             <label for="" class="control-label">Password</label>
             <input type="password" name="password" class="form-control" required id="">
         </div>
-        
+      
+        <div class="col-md-4">
+              {{#if company}}
+                <label for="" class="control-label">Company</label>
+                <input type="hidden" name="company" value="{{company.id}}">
+                <input type="text" readonly value="Company: {{company.name}}" class="form-control">
+              {{else}}
+                    <label for="" class="control-label">Company</label>
+                    <select id="from_place" required class="selectpicker select show-tick" data-width="100%" data-live-search="true" title="Select Company" data-size="4" data-header="Select Company" name="company">
+                        {{#each companies}}
+                        <option value="{{id}}">{{name}}</option>             
+                        {{/each}}
+                    </select>
+              {{/if}}
 
-        <div class="col-md-6">
-              <div class="image-preview pull-right" id="imagePreview">
-                <img width="100" class="img-thumbnail image-preview__image" src="/uploads/default.png" alt=""> 
-                <span class="image-preview__default-text"> </span>
-              </div>
         </div>
+
+
+       
 
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Create User</button>
+        <button type="submit" class="btn btn-primary">Create Employee</button>
     </div>
 </form>
 
@@ -69,8 +93,8 @@
 
 
 
-
 <!-- SCRIPTING FOR PREVIEWING IMAGE BEFORE UPLOADING  -->
+<script src="/admin/js/jquery.js"></script>
 <script>
 
     const inpFile = document.getElementById('inpFile');
@@ -96,5 +120,10 @@
             previewImage.style.display = 'none';
             previewImage.setAttribute('src',"");
         }
+    })
+
+    // triggering input file with a button
+    $('#upload-btn').click(function(){
+        $('#inpFile').click()
     })
 </script>

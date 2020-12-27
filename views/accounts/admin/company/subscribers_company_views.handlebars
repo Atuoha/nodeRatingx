@@ -1,0 +1,160 @@
+
+<div class="container">
+  <div class="jumbotron bg-secondary text-white text-center">
+            <h1 ><strong>Companies <i class="fa fa-building-o" style="color:gold"></i></strong></h1>
+        <p style="color:grey; font-size: 70%">nodeRatings is an implementation of a rating and review system using NodeJS and some few modules</p><br>
+
+          {{#ifeq loggedUser.role 'Manager'}}
+                <a href="/admin/company/create" class="btn btn-lg  btn-success">Create Company</a>
+                <a class="btn btn-lg btn-danger" href="/admin/company">List View</a>
+          {{/ifeq}}          
+    </div>
+
+<div class="container">
+    <div class="row">
+        {{#if companies}}
+            {{#each companies}}
+                <div class="col-md-4 cols">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-l4">
+                             <img src="/uploads/{{file}}" class="img-thumbnail" alt="" width="200"> <br><br> 
+                             <p>
+                                {{#if ratingNumber}} 
+                                   {{#ifeq ratingNumber 1}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                {{/ifeq}}  
+
+                                 {{#ifeq ratingNumber 2}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                {{/ifeq}}  
+
+                                 {{#ifeq ratingNumber 3}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                {{/ifeq}}  
+
+                                 {{#ifeq ratingNumber 4}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                {{/ifeq}}  
+
+
+                                {{#ifeq ratingNumber 5}}
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                 <i class="fa fa-star fa-spin" style="color: gold;"></i>  
+                                {{/ifeq}}  
+                              {{else}}
+                                 <i class="fa fa-star fa-spin" ></i>  
+                                 <i class="fa fa-star fa-spin"></i>  
+                                 <i class="fa fa-star fa-spin" ></i>  
+                                 <i class="fa fa-star fa-spin" ></i>  
+                                 <i class="fa fa-star fa-spin" ></i>  
+                              {{/if}}  
+                                 
+                            </p>
+                             <a class="btn btn-success sm-none" href="/admin/company/rating/create/{{id}}">Rate <i class="fa fa-star fa-spin"></i></a><br>
+                             <a class="btn btn-warning sm-none" href="/admin/company/show/{{id}}">View <i class="fa fa-eye"></i></a>
+
+
+                        </div>
+
+                        <div class="col-md-8 col-sm-8 col-l8">
+                            <h3>{{name}}</h3>
+                            <table>
+                                <tr>
+                                    <th><i class="fa fa-building-o"></i></th>
+                                    <td>{{sector}}</td>
+                                </tr>
+
+                                 <tr>
+                                    <th><i class="fa fa-map-marker"></i></th>
+                                    <td>{{address}}, {{city}}, {{country}}.</td>
+                                </tr>
+                        
+                                 <tr>
+                                    <th><i class="fa fa-external-link"></i></th>
+                                    <td><a style="color:grey" href="{{website}}" target="_blank">{{website}}</a></td><br>
+                                </tr>
+                            </table>
+
+                             <a class="btn btn-success lg-none" href="/admin/company/rating/create/{{id}}">Rate <i class="fa fa-star fa-spin"></i></a>
+                             <a class="btn btn-warning lg-none" href="/admin/company/show/{{id}}">View <i class="fa fa-eye"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+
+           
+        {{else}}
+        <div class="alert alert-success">No company to display</div>
+        {{/if}} 
+
+    </div>
+    
+    <nav class="text-center justify-content-center">
+     <ul class="pagination text-center">									
+        {{#paginate current=current pages=pages}}{{/paginate}}             
+    </ul>
+    </nav>
+
+    
+</div>
+
+
+
+
+
+<style>
+    .cols{
+        min-height: 220px;
+        padding: 5px;
+        background-color: white;
+        margin: 10px 0 0 30px;
+        width:30%
+    }
+
+    .sm-none{
+        display: inline-block;
+        margin-top: 5px;
+    }
+
+    .lg-none{
+        display: none;
+    }
+
+    
+    
+@media(max-width:720px){
+    .cols{
+        margin: 20px 0 0 10px;
+        background-color: white;
+        padding-top: 10px;
+        min-width: 90%;
+    }
+
+    .lg-none{
+        display: inline-block;
+    }
+
+    .sm-none{
+        display: none;
+    }
+}
+</style>

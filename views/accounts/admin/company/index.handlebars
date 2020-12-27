@@ -1,3 +1,4 @@
+
 <form action="/admin/department/multiaction" method="post" id="del_form">
 
 <div class="form-group multi_action col-md-4">
@@ -21,9 +22,11 @@
        <tr>
            <th><input type="checkbox"  id="checkbox"></th>
            <th>Name</th>
-           <th>Tag</th>
-           <th>Sub Content</th>
-           <th>Content</th>
+           <th>Address</th>
+           <th>City</th>
+           <th>Country</th>
+           <th>Sector</th>
+           <th>Website</th>
            <th>Imagery</th>
            <th>Actions</th>
        </tr>
@@ -31,24 +34,31 @@
 
     <tbody>
        
-            {{#if departments}}
-                {{#each departments}}
+            {{#if companies}}
+                {{#each companies}}
                  <tr>
                     <td><input type="checkbox" name="checkboxes[]"  value="{{id}}" class="checkboxes"></td>
 </form>
                     <td>{{name}}</td>
-                    <td>{{tag}}</td>
-                    <td>{{intro}}</td>
-                    <td>{{content}}</td>
+                    <td>{{address}}</td>
+                    <td>{{city}}</td>
+                    <td>{{country}}</td>
+                    <td>{{sector}}</td>
+                    <td>{{website}}</td>
                     <td><img src="/uploads/{{file}}" width="200" class="thumbnail"></td>
-                    <td><a href="/admin/department/edit/{{id}}" class="btn btn-success"><i class="fa fa-pencil"></i> Edit</a></td>
-                    <td><a href="/admin/department/show/{{id}}" class="btn btn-warning"><i class="fa fa-eye"></i> View</a></td>
-                    <td><a href="/admin/department/delete/{{id}}" class="btn btn-danger"><i class="fa fa-remove"></i> Delete</a></td>
+                    <td><a href="/admin/company/edit/{{id}}" class="btn btn-success"><i class="fa fa-pencil"></i></a></td>
+                    <td><a href="/admin/company/show/{{id}}" class="btn btn-warning"><i class="fa fa-eye"></i></a></td>
+                    <td>
+                      <form action="/admin/company/delete/{{id}}?_method=DELETE" method="post">
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                      </form>
+                    </td>
+                    {{!-- <td><a href="/admin/company/delete/{{id}}" class="btn btn-danger"><i class="fa fa-remove"></i> Delete</a></td> --}}
                 </tr>
                     
                 {{/each}}
             {{else}}
-            <div class="alert alert-success">No Department to show</div>
+            <div class="alert alert-success">No Company to show</div>
             {{/if}}
     </tbody>
 </table>

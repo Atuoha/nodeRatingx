@@ -6,9 +6,9 @@
           <div class="text-center" >
             <div style="margin-top: 10px; padding-bottom:10px;"> 
                {{#if loggedUser.file}}
-                    <img alt="" src="/uploads/{{loggedUser.file}}" width="50" class="img-circle" >
+                    <img alt="" src="/uploads/{{loggedUser.file}}" width="70" class="img-circle img-thumbnail" >
                   {{else}}
-                    <img alt="" src="/uploads/default.png" width="50">
+                    <img alt="" src="/uploads/default.png" width="70">
                 {{/if}}           
               </div>
               <span>Welcome,</span>
@@ -22,23 +22,48 @@
           </li>
 
            <li>
-            <a class="" href="/admin/users/profile/{{loggedUser.id}}">
+            <a class="" href="/admin/profile">
                           <i class="fa fa-user"></i>
                           <span>Profile</span>
                       </a>
           </li>
 
 
-           <li>
-            <a class="" href="/admin/users/profile/{{loggedUser.id}}">
-                          <i class="fa fa-building-o"></i>
-                          <span>Companies</span>
-                      </a>
-          </li>
+              <li class="sub-menu">
+                <a href="javascript:;" class="">
+                            <i class="fa fa-building-o"></i>
+                            <span>Companies</span>
+                            <span class="menu-arrow arrow_carrot-right"></span>
+                        </a>
+                <ul class="sub">
+                    <li><a class="" href="/admin/company">List View | Companies</a></li>
+                    <li><a class="" href="/admin/company/subscribers_view">Grid View | Companies</a></li>
+                    <li><a class="" href="/admin/company/create">Create Company</a></li>
+                    <li><a class="" href="/admin/company/dummy">Create Dummy</a></li>
+
+                </ul>
+            </li>
 
 
+             <li class="sub-menu">
+                <a href="javascript:;" class="">
+                            <i class="fa fa-group"></i>
+                            <span>Users</span>
+                            <span class="menu-arrow arrow_carrot-right"></span>
+                        </a>
+                <ul class="sub">
+                    <li><a class="" href="/admin/users">All Users</a></li>    
+                    <li><a class="" href="/admin/users/create">Create Users</a></li>
+                    <li><a class="" href="/admin/users/create">Create Dummy</a></li>
+
+
+                </ul>
+            </li>
+
+
+
            <li>
-            <a class="" href="/admin/users/profile/{{loggedUser.id}}">
+            <a class="" href="/admin/company/search">
                           <i class="fa fa-search"></i>
                           <span>Search</span>
                       </a>
@@ -47,7 +72,7 @@
 
 
           <li>
-            <a class="" href="/admin/users/profile/{{loggedUser.id}}">
+            <a class="" href="/admin/company/leaderboard">
                           <i class="fa fa-bars"></i>
                           <span>Leadership</span>
                       </a>

@@ -19,7 +19,7 @@
 </div>
 
 
-<table class="table table-striped table-responsive">
+<table class="table table-striped table-responsive responsive">
     <thead>
        <tr>
             <th><input type="checkbox"  id="checkbox"></th>
@@ -27,7 +27,9 @@
            <th>Imagery</th>
            <th>Email</th>
            <th>Phone</th>
+           <th>Company</th>
            <th>Role</th>
+           <th>Position</th>
            <th>Status</th>
            <th>Actions</th>
        </tr>
@@ -40,7 +42,7 @@
                 <tr>
                      <td><input type="checkbox" name="checkboxes[]"  value="{{id}}" class="checkboxes"></td>
 </form>
-                    <td>{{name}}</td>
+                    <td>{{fullname}}</td>
                     {{#if file}}
                         <td><img src="/uploads/{{file}}" class="img-circle" alt="" width="40"></td>
                         {{else}}
@@ -48,16 +50,24 @@
                     {{/if}}
                     <td>{{email}}</td>
                     <td>{{phone}}</td>
+                    <td>{{company.name}}</td>
                     <td>{{role}}</td>
+                    <td>{{position}}</td>
                     <td>{{status}}</td>
-                    <td><a href="/admin/users/edit/{{id}}" class="btn btn-success"><i class="fa fa-pencil"></i> Edit</a></td>
-                    <td><a href="/admin/users/show/{{id}}" class="btn btn-warning"><i class="fa fa-eye"></i> View</a></td>
-                    <td><a href="/admin/users/delete/{{id}}" class="btn btn-danger"><i class="fa fa-remove"></i> Delete</a></td>
+                    <td><a href="/user/messaging/{{id}}" class="btn btn-success"><i class="fa fa-envelope"></i></a></td>
+                    <td><a href="/user/employee/edit/{{id}}" class="btn btn-default"><i class="fa fa-pencil"></i></a></td>
+                    <td><a href="/user/employee/show/{{id}}" class="btn btn-warning"><i class="fa fa-eye"></i></a></td>
+                    <td>
+                      <form action="/user/employee/delete/{{id}}?_method=DELETE" method="post">
+                          <button class="btn btn-danger" type="submit"><i class="fa fa-remove"></i></button>
+                      </form>
+                    </td>
+                    {{!-- <td><a href="/user/employee/delete/{{id}}" class="btn btn-danger"><i class="fa fa-remove"></i></a></td> --}}
                 </tr>
         {{/each}}
 
       {{else}}
-        <div class="alert alert-success">No User to display</div>
+        <div class="alert alert-success">No Users to display</div>
 
      {{/if}}      
     </tbody>
