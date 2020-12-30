@@ -2,10 +2,16 @@ const express = require('express'),
     app = express(),
     router = express.Router(),
     User = require('../../../models/User'),
-    Messaging = require('../../../models/Messaging');
+    Messaging = require('../../../models/Messaging'),
+    { userAuth } = require('../../../helpers/authenticate');
+    
+   
 
 
-router.all('/*', (req, res, next)=>{
+
+
+
+router.all('/*', userAuth, (req, res, next)=>{
     req.app.locals.layout = 'messaging';
     next()
 })   

@@ -6,10 +6,16 @@ const express = require('express'),
     faker = require('faker'),
     fs = require('fs'),
     bcrypt = require('bcryptjs'),
-    { isEmpty } = require('../../../helpers/upload-helpers');
+    { isEmpty } = require('../../../helpers/upload-helpers'),
+    { adminAuth } = require('../../../helpers/authenticate');
+    
+   
 
 
-router.all('/*', (req, res, next)=>{
+
+
+
+router.all('/*', adminAuth, (req, res, next)=>{
     req.app.locals.layout = 'admin';
     next()
 })    
@@ -142,13 +148,36 @@ router.post('/create', (req, res)=>{
 
 
 
-// router.get('/employees_view/:id', (req, res)=>{
-//     User.find({company: req.params.id})
-//     .then(employees=>{
-//         res.render('accounts/user/company/company_employee', {title: 'Employees|Company', employees: employees})
-//     })
-//     .catch(err=>console.log(err))
-// })
+
+
+router.get('/dummy', (req, res)=>{
+    res.render('accounts/admin/users/dummy', {title: 'Admin|Users'})
+})
+
+
+
+router.post('/dummy', (req, res)=>{
+    for(let i = 0; i < req.body.number; i++){
+
+        const newUser = new User()
+        newUser.fullname = faker.lorem.word() . faker.lorem.word()
+        newUser.email = faker.internet.email()
+        newUser.phone = '000-000-000-000'
+        
+        bcrypt.genSalt(10, (err, salt)=>{
+            bcrypt.hash('secret', salt, (err, hash)=>{
+                if(err)console.log(err)
+                newUser.password = hash
+                newUser.save()
+                .then(response=>{
+                    req.flash('success_msg', `${req.body.number} dummy users has been created :)`)
+                    res.redirect('/admin/users')
+                })
+                .catch(err=>console.log(err))
+            })
+        })
+    }
+})
 
 
 

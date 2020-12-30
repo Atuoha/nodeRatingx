@@ -5,10 +5,16 @@ const express = require('express'),
     Company = require('../../../models/Company'),
     fs = require('fs'),
     bcrypt = require('bcryptjs'),
-    { isEmpty } = require('../../../helpers/upload-helpers');
-
+    { isEmpty } = require('../../../helpers/upload-helpers'),
+    { userAuth } = require('../../../helpers/authenticate');
     
-router.all('/*', (req, res, next)=>{
+   
+
+
+
+
+
+router.all('/*', userAuth, (req, res, next)=>{
     req.app.locals.layout = 'user'
     next()
 })

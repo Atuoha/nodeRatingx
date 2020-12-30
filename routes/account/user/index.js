@@ -1,14 +1,16 @@
 const express  = require('express'),
     app = express(),
     router = express.Router(),
-    Company = require('../../../models/Company');
+    Company = require('../../../models/Company'),
+    { userAuth } = require('../../../helpers/authenticate');
+    
    
 
 
 
 
 
-  router.all('/*', (req, res, next)=>{
+  router.all('/*', userAuth, (req, res, next)=>{
       req.app.locals.layout = 'user'
       next()
   })  

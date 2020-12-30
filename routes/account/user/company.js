@@ -7,12 +7,16 @@ const express = require('express'),
     Rating = require('../../../models/Rating'),
     faker = require('faker'),
     fs = require('fs'),
-    { isEmpty } = require('../../../helpers/upload-helpers');
+    { isEmpty } = require('../../../helpers/upload-helpers'),
+    { userAuth } = require('../../../helpers/authenticate');
+    
+   
 
 
 
 
-router.all('/*', (req, res, next)=>{
+
+router.all('/*', userAuth, (req, res, next)=>{
     req.app.locals.layout = 'user'
     next()
 })    
@@ -88,22 +92,27 @@ router.get('/edit/:id', (req, res)=>{
     Company.findOne({_id: req.params.id})
     .then(company=>{
 
-        company.user.forEach(account=>{
-            if(account != req.user.id){
-                // this is still giving me errors. search how to loop through an array using foreach and stop whence a data that looks like what we are looking for is seen if not....
+        for(let i = 0; i < company.user.length; i++){
+            let array_id = company.user[i];
+            if(array_id == req.user.id){
+                console.log('recognised')
+                res.render('accounts/user/company/edit', {title: 'Company|Edit', company: company})
+            }else{
                 console.log('not recognised')
                 req.flash('error_msg', 'Access Denied! You can only edit companies you created ):')
                 res.redirect('/user/company')
-            }else{
-                console.log('recognised')
-                res.render('accounts/user/company/edit', {title: 'Company|Edit', company: company})
             }
-        })
+        }
+
+       
       
     })
     .catch(err=>console.log(err))
 
 })
+
+
+
 
 router.get('/show/:id', (req, res)=>{
     Company.findOne({_id: req.params.id})
@@ -236,7 +245,7 @@ router.post('/create', (req, res)=>{
 
 router.post('/dummy', (req, res)=>{
 
-    if(req.user.role !== 'Manager'){
+    if(req.user.role !== 'Admin'){
         req.flash('error_msg', 'Access Denied! Action requires managerial certifications ):')
         res.redirect('/user/company')
     }
@@ -271,41 +280,48 @@ router.put('/update/:id', (req, res)=>{
     Company.findOne({_id: req.params.id})
     .then(company=>{
 
-        // if(company.user != req.user.id){
-        //     req.flash('error_msg', 'Access Denied! You can only edit companies you created ):')
-        //     res.redirect('/user/company')
-        // }
-
-        let filename = company.file
-        if(!isEmpty(req.files)){
-            const file = req.files.file
-            filename = Date.now()+'-'+file.name
-            const uploadDir = './public/uploads/'
-            file.mv(uploadDir+filename, err=>{
-                if(err)console.log(err)
-            })
-
-            if(company.file !== 'img_place.png' && company.file !== ''){
-                let delDir = './public/uploads/'
-                fs.unlink(delDir+company.file, err=>{
-                    if(err)console.log(err)
+        for(let i = 0; i<= company.user.length; i++){
+            let array_id = company.user[i];
+            if(array_id == req.user.id){
+                console.log('recognised')
+                let filename = company.file
+                if(!isEmpty(req.files)){
+                    const file = req.files.file
+                    filename = Date.now()+'-'+file.name
+                    const uploadDir = './public/uploads/'
+                    file.mv(uploadDir+filename, err=>{
+                        if(err)console.log(err)
+                    })
+        
+                    if(company.file !== 'img_place.png' && company.file !== ''){
+                        let delDir = './public/uploads/'
+                        fs.unlink(delDir+company.file, err=>{
+                            if(err)console.log(err)
+                        })
+                    }
+                }
+        
+                company.name = req.body.name
+                company.address = req.body.address
+                company.city = req.body.city
+                company.country = req.body.country
+                company.sector = req.body.sector
+                company.website = req.body.website
+                company.file = filename
+                company.save()
+                .then(response=>{
+                    req.flash('success_msg', `${response.name} has been updated :)`)
+                    res.redirect('/user/company')
                 })
+                .catch(err=>console.log(err))
+            }else{
+                console.log('not recognised')
+                req.flash('error_msg', 'Access Denied! You can only edit companies you created ):')
+                res.redirect('/user/company')
             }
         }
 
-        company.name = req.body.name
-        company.address = req.body.address
-        company.city = req.body.city
-        company.country = req.body.country
-        company.sector = req.body.sector
-        company.website = req.body.website
-        company.file = filename
-        company.save()
-        .then(response=>{
-            req.flash('success_msg', `${response.name} has been updated :)`)
-            res.redirect('/user/company')
-        })
-        .catch(err=>console.log(err))
+        
 
     })
     .catch(err=>console.log(err))
@@ -321,37 +337,43 @@ router.delete('/delete/:id', (req, res)=>{
 
     Company.findOne({_id: req.params.id})
     .then(company=>{
+
+        for(let i = 0; i<= company.user.length; i++){
+            let array_id = company.user[i];
+            if(array_id == req.user.id){
+                console.log('recognised')
+               
+                if(company.file !== 'img_place.png' && company.file !== ''){
+                    let delDir = './public/uploads/'
+                    fs.unlink(delDir+company.file, err=>{
+                        if(err)console.log(err)
+                    })
+                }
         
-        if(company.user != req.user.id){
-            req.flash('error_msg', 'Access Denied! You can only delete companies you created ):')
-            res.redirect('/user/company')
-        }else{
-
-            if(company.file !== 'img_place.png' && company.file !== ''){
-                let delDir = './public/uploads/'
-                fs.unlink(delDir+company.file, err=>{
-                    if(err)console.log(err)
+                // removing company from users data
+                User.find({company: company.id})
+                .then(user=>{
+                    user.company = ''
+                    user.save()
+                    .then(response=>{
+                        console.log(`Removed all users that had ${company.name} ):`)
+                    })
+                    .catch(err=>console.log(err))
                 })
+        
+                company.delete()
+                .then(response=>{
+                    req.flash('success_msg', `${response.name} has been deleted :)`)
+                })
+                .catch(err=>console.log(err))
+            }else{
+                console.log('not recognised')
+                req.flash('error_msg', 'Access Denied! You can only edit companies you created ):')
+                res.redirect('/user/company')
             }
-
         }
 
-        // removing company from users data
-        User.find({company: company.id})
-        .then(user=>{
-            user.company = ''
-            user.save()
-            .then(response=>{
-                console.log(`Removed all users that had ${company.name} ):`)
-            })
-            .catch(err=>console.log(err))
-        })
-
-        company.delete()
-        .then(response=>{
-            req.flash('success_msg', `${response.name} has been deleted :)`)
-        })
-        .catch(err=>console.log(err))
+        
 
     })
     .catch(err=>console.log(err))

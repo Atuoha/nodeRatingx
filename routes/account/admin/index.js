@@ -3,11 +3,16 @@ const express  = require('express'),
     router = express.Router(),
     Rating = require('../../../models/Rating'),
     User = require('../../../models/User'),
-    Company = require('../../../models/Company');
+    Company = require('../../../models/Company'),
+    { adminAuth } = require('../../../helpers/authenticate');
     
+   
 
 
-  router.all('/*', (req, res, next)=>{
+
+
+
+  router.all('/*', adminAuth, (req, res, next)=>{
       req.app.locals.layout = 'admin'
       next()
   })  

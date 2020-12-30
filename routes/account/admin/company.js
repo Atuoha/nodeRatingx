@@ -7,12 +7,16 @@ const express = require('express'),
     Rating = require('../../../models/Rating'),
     faker = require('faker'),
     fs = require('fs'),
-    { isEmpty } = require('../../../helpers/upload-helpers');
+    { isEmpty } = require('../../../helpers/upload-helpers'),
+    { adminAuth } = require('../../../helpers/authenticate');
+    
+   
 
 
 
 
-router.all('/*', (req, res, next)=>{
+
+router.all('/*', adminAuth, (req, res, next)=>{
     req.app.locals.layout = 'admin'
     next()
 })    
@@ -59,10 +63,7 @@ router.get('/create', (req, res)=>{
 
 
 router.get('/dummy', (req, res)=>{
-    if(req.user.role !== 'Manager'){
-        req.flash('error_msg', 'Access Denied! Action requires managerial certifications ):')
-        res.redirect('/admin/company')
-    }
+   
     res.render('accounts/admin/company/dummy', {title: 'company|Dummy'})
 })
 
@@ -196,14 +197,9 @@ router.post('/create', (req, res)=>{
 
 router.post('/dummy', (req, res)=>{
 
-    if(req.user.role !== 'Manager'){
-        req.flash('error_msg', 'Access Denied! Action requires managerial certifications ):')
-        res.redirect('/admin/company')
-    }
-
     for(let i = 0; i < req.body.number; i++){
         const newCompany = new Company()
-        newCompany.name = faker.lorem.word()+ '' + faker.random.word()
+        newCompany.name = faker.lorem.word()+ ' ' + faker.random.word()
         newCompany.address = faker.random.word()+' Avenue'
         newCompany.sector = faker.random.word()
         newCompany.website = 'www.'+faker.random.word()+'.com'

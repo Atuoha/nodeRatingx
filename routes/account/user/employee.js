@@ -6,10 +6,16 @@ const express = require('express'),
     faker = require('faker'),
     fs = require('fs'),
     bcrypt = require('bcryptjs'),
-    { isEmpty } = require('../../../helpers/upload-helpers');
+    { isEmpty } = require('../../../helpers/upload-helpers'),
+    { userAuth } = require('../../../helpers/authenticate');
+    
+   
 
 
-router.all('/*', (req, res, next)=>{
+
+
+
+router.all('/*', userAuth, (req, res, next)=>{
     req.app.locals.layout = 'user';
     next()
 })    
@@ -19,7 +25,7 @@ router.all('/*', (req, res, next)=>{
 router.get('/', (req, res)=>{
     Company.findOne({user: req.user})
     .then(company=>{
-        User.find({company: company.id})
+        User.find({company: company._id})
         .then(users=>{
             res.render('accounts/user/employees', {title: 'Employees|User', users: users})
         })

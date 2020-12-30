@@ -4,10 +4,16 @@ const express = require('express'),
     User = require('../../../models/User'),
     fs = require('fs'),
     bcrypt = require('bcryptjs'),
-    { isEmpty } = require('../../../helpers/upload-helpers');
-
+    { isEmpty } = require('../../../helpers/upload-helpers'),
+    { adminAuth } = require('../../../helpers/authenticate');
     
-router.all('/*', (req, res, next)=>{
+   
+
+
+
+
+
+router.all('/*', adminAuth, (req, res, next)=>{
     req.app.locals.layout = 'admin'
     next()
 })
