@@ -13,7 +13,7 @@ const express = require('express'),
 
 
 
-router.all('/*', adminAuth, (req, res, next)=>{
+router.all('/*', (req, res, next)=>{
     req.app.locals.layout = 'admin'
     next()
 })

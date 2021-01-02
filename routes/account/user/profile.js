@@ -14,7 +14,7 @@ const express = require('express'),
 
 
 
-router.all('/*', userAuth, (req, res, next)=>{
+router.all('/*', (req, res, next)=>{
     req.app.locals.layout = 'user'
     next()
 })

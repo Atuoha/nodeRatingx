@@ -53,6 +53,8 @@
                     <td>{{position}}</td>
                     <td>{{status}}</td>
                     <td><a href="/user/messaging/{{id}}" class="btn btn-success"><i class="fa fa-envelope"></i></a></td>
+
+                    {{#ifeq loggedUser.role 'Manager'}}
                     <td><a href="/user/employee/edit/{{id}}" class="btn btn-default"><i class="fa fa-pencil"></i></a></td>
                     <td><a href="/user/employee/show/{{id}}" class="btn btn-warning"><i class="fa fa-eye"></i></a></td>
                     <td>
@@ -60,6 +62,7 @@
                           <button class="btn btn-danger" type="submit"><i class="fa fa-remove"></i></button>
                       </form>
                     </td>
+                    {{/ifeq}}
                     {{!-- <td><a href="/user/employee/delete/{{id}}" class="btn btn-danger"><i class="fa fa-remove"></i></a></td> --}}
                 </tr>
         {{/each}}

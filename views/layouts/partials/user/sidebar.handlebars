@@ -49,7 +49,7 @@
             </li>
 
 
-             {{#ifeq loggedUser.role 'Manager'}}
+            
              <li class="sub-menu">
                 <a href="javascript:;" class="">
                             <i class="fa fa-group"></i>
@@ -57,12 +57,13 @@
                             <span class="menu-arrow arrow_carrot-right"></span>
                         </a>
                 <ul class="sub">
-                    <li><a class="" href="/user/employee">All Employees</a></li>    
+                    <li><a class="" href="/user/employee">All Employees</a></li> 
+                     {{#ifeq loggedUser.role 'Manager'}}   
                     <li><a class="" href="/user/employee/create">Create Employees</a></li>
+                    {{/ifeq}}
 
                 </ul>
             </li>
-            {{/ifeq}}
 
 
 

@@ -235,64 +235,66 @@ router.post('/forgot', (req, res, next)=>{
         },
 
         function(token, user, callback){
-            let transporter = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 465,
-                secure: true,
-                auth: {
-                    type: 'OAuth2',
-                    clientId: '000000000000-xxx.apps.googleusercontent.com',
-                    clientSecret: 'XxxxxXXxX0xxxxxxxx0XXxX0'
-                }
-            });
+
             
+            // let transporter = nodemailer.createTransport({
+            //     host: 'smtp.gmail.com',
+            //     port: 465,
+            //     secure: true,
+            //     auth: {
+            //         type: 'OAuth2',
+            //         clientId: '000000000000-xxx.apps.googleusercontent.com',
+            //         clientSecret: 'XxxxxXXxX0xxxxxxxx0XXxX0'
+            //     }
+            // });
+            
+            // let mailOptions = {
+            //     from: 'nodeRatingx ' + '<' + EMAIL_ADDRESS + '>',
+            //     to: user.mail,
+            //     subject: 'nodeRatingx Reset Link',
+            //     text: 'Hello there, you requested to have your password reset. \n\n' + 
+            //             'Use this link to reset you password now: \n\n' +
+            //             'http://localhost:1777/logs/reset/'+token + '\n\n',
+            //     auth: {
+            //         user:  EMAIL_ADDRESS,
+            //         refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
+            //         accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x',
+            //         expires: 1484314697598
+            //     }
+            // };
+
+            // transporter.sendMail(mailOptions, (err, response)=>{
+            //     if(err)console.log(err);
+            //     req.flash('success_msg', `Password reset link has been sent to ${user.email}!`);
+            //     return callback(err, user)
+            // })
+
+
+
+
+           let smtpTransport = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                auth: {
+                    user: EMAIL_ADDRESS,
+                    pass: EMAIL_PASS
+                }
+                
+            })
+
             let mailOptions = {
+                to: user.email,
                 from: 'nodeRatingx ' + '<' + EMAIL_ADDRESS + '>',
-                to: user.mail,
                 subject: 'nodeRatingx Reset Link',
                 text: 'Hello there, you requested to have your password reset. \n\n' + 
-                        'Use this link to reset you password now: \n\n' +
-                        'http://localhost:1777/logs/reset/'+token + '\n\n',
-                auth: {
-                    user:  EMAIL_ADDRESS,
-                    refreshToken: '1/XXxXxsss-xxxXXXXXxXxx0XXXxxXXx0x00xxx',
-                    accessToken: 'ya29.Xx_XX0xxxxx-xX0X0XxXXxXxXXXxX0x',
-                    expires: 1484314697598
-                }
-            };
+                      'Use this link to reset you password now: \n\n' +
+                      'http://localhost:1777/logs/reset/'+token + '\n\n' 
+            }
 
-            transporter.sendMail(mailOptions, (err, response)=>{
+            smtpTransport.sendMail(mailOptions, (err, response)=>{
                 if(err)console.log(err);
                 req.flash('success_msg', `Password reset link has been sent to ${user.email}!`);
                 return callback(err, user)
             })
-
-
-
-
-        //    let smtpTransport = nodemailer.createTransport({
-        //         host: "smtp.gmail.com",
-        //         auth: {
-        //             user: EMAIL_ADDRESS,
-        //             pass: EMAIL_PASS
-        //         }
-                
-        //     })
-
-        //     let mailOptions = {
-        //         to: user.email,
-        //         from: 'nodeRatingx ' + '<' + EMAIL_ADDRESS + '>',
-        //         subject: 'nodeRatingx Reset Link',
-        //         text: 'Hello there, you requested to have your password reset. \n\n' + 
-        //               'Use this link to reset you password now: \n\n' +
-        //               'http://localhost:1777/logs/reset/'+token + '\n\n' 
-        //     }
-
-        //     smtpTransport.sendMail(mailOptions, (err, response)=>{
-        //         if(err)console.log(err);
-        //         req.flash('success_msg', `Password reset link has been sent to ${user.email}!`);
-        //         return callback(err, user)
-        //     })
 
 
 

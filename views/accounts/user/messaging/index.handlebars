@@ -9,7 +9,8 @@
                     
                         <div class="chat">
                             <div class="chat-wrapper">
-                                {{#if logged_chats}}
+                                {{#if logged_chats}} 
+                                    {{#if receiver_chats}}
                                 {{!-- try and use ORR statement  --}}
                                     {{#each logged_chats}}
                                         <div class="chat-message right" style="float:right;background-color:#1e88e5;color:white;">
@@ -19,7 +20,7 @@
                                                 <img class="rounded-circle" width="30" src="/uploads/default.png"alt="img">    
                                             {{/if}}
                                             <b>Me:</b> <span class="msg">{{msg}}</span> <br> 
-                                            <span class="text-small" style="float:right"><sub>2 mins ago</sub></span>
+                                            <span class="text-small" style="float:right"><sub>{{generate_date created_At 'h:hh A'}}</sub></span>
                                         </div> 
                                     {{/each}}
 
@@ -33,7 +34,7 @@
                                                 {{/if}}
 
                                                 <b>{{sender.fullname}}:</b> <span class="white-text">{{msg}}</span><br>
-                                                <span class="text-small" style="float:right"><sub>1 min ago</sub></span>
+                                                <span class="text-small" style="float:right"><sub>{{generate_date created_At 'h:hh A'}}</sub></span>
                                         </div> 
 
                                     {{/each}}
@@ -45,6 +46,7 @@
                                         <p>Start Conversation with {{user.fullname}}...</p>
                                     </div>
                                 {{/if}}    
+                                {{/if}}
 
 
                             </div>

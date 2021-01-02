@@ -15,7 +15,7 @@ const express = require('express'),
 
 
 
-router.all('/*', userAuth, (req, res, next)=>{
+router.all('/*', (req, res, next)=>{
     req.app.locals.layout = 'user';
     next()
 })    
@@ -25,11 +25,17 @@ router.all('/*', userAuth, (req, res, next)=>{
 router.get('/', (req, res)=>{
     Company.findOne({user: req.user})
     .then(company=>{
-        User.find({company: company._id})
-        .then(users=>{
-            res.render('accounts/user/employees', {title: 'Employees|User', users: users})
-        })
-        .catch(err=>console.log(err))
+        if(company){
+            User.find({company: company._id})
+            .then(users=>{
+                res.render('accounts/user/employees', {title: 'Employees|User', users: users})
+            })
+            .catch(err=>console.log(err))
+        }else{
+            req.flash('error_msg', 'No company created or employees')
+            res.redirect('/user/company')
+        }
+       
     })
     .catch(err=>console.log(err))
    
